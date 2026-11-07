@@ -1,0 +1,2924 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP Muh. 2 Depok - Latihan TKA 2026/2027</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0fdf4;
+            color: #0f172a;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, .font-display {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        /* Game Buttons & Effects */
+        .btn-game {
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 5px 0 rgba(0,0,0,0.2);
+        }
+        .btn-game:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+        }
+        /* Spreadsheet Table Styling */
+        .sheet-table th {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #334155;
+            padding: 8px 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        .sheet-table td {
+            border: 1px solid #e2e8f0;
+            padding: 8px 10px;
+            font-size: 0.82rem;
+        }
+        .sheet-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        .sheet-table tr:hover {
+            background-color: #ecfdf5;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            touch-action: manipulation;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+            50% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
+        }
+        .unlocked-glow {
+            animation: pulseGlow 2s infinite;
+        }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float-slow {
+            animation: floatSlow 5s ease-in-out infinite;
+        }
+        .beranda-glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="h-[100dvh] w-screen overflow-hidden flex flex-col bg-gradient-to-br from-sky-200 via-emerald-100 to-amber-100 relative select-none">
+
+    <!-- ================= ILUSTRASI BACKGROUND BERANDA PENUH WARNA (TIDAK MENUTUPI TULISAN) ================= -->
+    <div id="berandaBgIllustration" class="fixed inset-0 pointer-events-none select-none z-0 overflow-hidden">
+        <svg class="w-full h-full object-cover" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <defs>
+                <!-- Gradasi Langit Cerah Berwarna -->
+                <linearGradient id="skyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35" />
+                    <stop offset="45%" stop-color="#a7f3d0" stop-opacity="0.4" />
+                    <stop offset="100%" stop-color="#fde68a" stop-opacity="0.45" />
+                </linearGradient>
+                <!-- Gradasi Bukit Hijau -->
+                <linearGradient id="hillGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#34d399" stop-opacity="0.45" />
+                    <stop offset="100%" stop-color="#059669" stop-opacity="0.65" />
+                </linearGradient>
+                <linearGradient id="hillGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#10b981" stop-opacity="0.5" />
+                    <stop offset="100%" stop-color="#047857" stop-opacity="0.7" />
+                </linearGradient>
+                <!-- Gradasi Lintasan Lari Stadion -->
+                <linearGradient id="trackGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.55" />
+                    <stop offset="50%" stop-color="#fb7185" stop-opacity="0.55" />
+                    <stop offset="100%" stop-color="#e11d48" stop-opacity="0.6" />
+                </linearGradient>
+            </defs>
+
+            <!-- Lapisan Langit -->
+            <rect width="1440" height="900" fill="url(#skyGrad)" />
+
+            <!-- Matahari Pagi yang Hangat di Kanan Atas -->
+            <circle cx="1260" cy="130" r="110" fill="#fde047" fill-opacity="0.35" />
+            <circle cx="1260" cy="130" r="75" fill="#facc15" fill-opacity="0.45" />
+
+            <!-- Pelangi Lembut Melengkung di Latar Belakang -->
+            <path d="M-100 650 Q 720 -50 1540 650" stroke="#fb7185" stroke-width="18" stroke-opacity="0.16" fill="none" />
+            <path d="M-100 668 Q 720 -32 1540 668" stroke="#fbbf24" stroke-width="18" stroke-opacity="0.16" fill="none" />
+            <path d="M-100 686 Q 720 -14 1540 686" stroke="#34d399" stroke-width="18" stroke-opacity="0.16" fill="none" />
+            <path d="M-100 704 Q 720 4 1540 704" stroke="#38bdf8" stroke-width="18" stroke-opacity="0.16" fill="none" />
+
+            <!-- Awan Putih Lembut -->
+            <g fill="#ffffff" fill-opacity="0.75">
+                <circle cx="190" cy="150" r="38" />
+                <circle cx="235" cy="140" r="48" />
+                <circle cx="285" cy="152" r="35" />
+                <rect x="190" y="150" width="95" height="38" rx="18" />
+
+                <circle cx="680" cy="110" r="32" />
+                <circle cx="720" cy="98" r="42" />
+                <circle cx="762" cy="112" r="30" />
+
+                <circle cx="1040" cy="190" r="28" />
+                <circle cx="1075" cy="180" r="36" />
+                <circle cx="1110" cy="192" r="26" />
+            </g>
+
+            <!-- Ornamen Edukasi & Literasi Melayang (Buku & Bintang Prestasi) -->
+            <g opacity="0.35">
+                <!-- Buku Terbuka Kiri -->
+                <path d="M90 310 Q 125 295 160 310 L 160 355 Q 125 340 90 355 Z" fill="#3b82f6" />
+                <path d="M160 310 Q 195 295 230 310 L 230 355 Q 195 340 160 355 Z" fill="#60a5fa" />
+                <!-- Bintang & Medali -->
+                <polygon points="480,160 488,178 508,180 493,193 497,212 480,202 463,212 467,193 452,180 472,178" fill="#f59e0b" />
+                <polygon points="940,130 946,144 961,146 950,156 953,170 940,162 927,170 930,156 919,146 934,144" fill="#ec4899" />
+            </g>
+
+            <!-- Siluet Gunung Merapi & Perbukitan Hijau Sleman/Depok di Kejauhan -->
+            <path d="M480 680 L 710 340 L 940 680 Z" fill="#64748b" fill-opacity="0.22" />
+            <path d="M655 420 L 710 340 L 765 420 Q 735 435 710 415 Q 685 435 655 420 Z" fill="#ffffff" fill-opacity="0.4" />
+
+            <!-- Bukit Hijau Berlapis -->
+            <path d="M-80 680 Q 320 510 780 640 T 1520 590 L 1520 900 L -80 900 Z" fill="url(#hillGrad1)" />
+            <path d="M-80 740 Q 450 590 960 700 T 1520 660 L 1520 900 L -80 900 Z" fill="url(#hillGrad2)" />
+
+            <!-- Bendera Umbul-Umbul Warna-Warni Stadion di Atas Bukit -->
+            <g opacity="0.55">
+                <path d="M80 630 Q 400 560 720 620 T 1360 580" stroke="#0f172a" stroke-width="2" fill="none" />
+                <polygon points="150,618 165,648 180,614" fill="#ef4444" />
+                <polygon points="240,606 255,636 270,602" fill="#f59e0b" />
+                <polygon points="330,598 345,628 360,595" fill="#3b82f6" />
+                <polygon points="420,594 435,624 450,593" fill="#10b981" />
+                <polygon points="510,596 525,626 540,598" fill="#a855f7" />
+                <polygon points="1050,612 1065,642 1080,608" fill="#ec4899" />
+                <polygon points="1140,604 1155,634 1170,600" fill="#eab308" />
+                <polygon points="1230,595 1245,625 1260,592" fill="#06b6d4" />
+            </g>
+
+            <!-- Lintasan Lari Atletik Melengkung di Bagian Bawah -->
+            <path d="M-100 820 Q 720 690 1540 810 L 1540 920 L -100 920 Z" fill="url(#trackGrad)" />
+            <path d="M-100 845 Q 720 715 1540 835" stroke="#ffffff" stroke-width="3" stroke-dasharray="18 14" stroke-opacity="0.65" fill="none" />
+            <path d="M-100 875 Q 720 745 1540 865" stroke="#ffffff" stroke-width="3" stroke-dasharray="18 14" stroke-opacity="0.65" fill="none" />
+        </svg>
+    </div>
+
+    <!-- ================= TOP NAVBAR (POJOK KIRI ATAS IDENTITAS SEKOLAH) ================= -->
+    <header class="shrink-0 z-30 bg-white/95 backdrop-blur-md border-b border-emerald-300/80 shadow-sm">
+        <div class="max-w-[1440px] mx-auto px-3 sm:px-5 py-1.5 flex items-center justify-between gap-2">
+            <!-- Pojok Kiri Atas: Identitas Sekolah & Latihan TKA -->
+            <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-emerald-600 to-teal-700 flex items-center justify-center text-white shadow-sm shrink-0">
+                    <i class="fa-solid fa-graduation-cap text-sm sm:text-base"></i>
+                </div>
+                <div class="min-w-0">
+                    <div class="flex items-center gap-1.5">
+                        <span class="px-2 py-0.2 text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider bg-emerald-100 text-emerald-800 rounded-full border border-emerald-300">
+                            Bahasa Indonesia • Kelas IX
+                        </span>
+                    </div>
+                    <h1 class="text-xs sm:text-base md:text-lg font-extrabold text-slate-900 tracking-tight truncate">
+                        SMP Muh. 2 Depok, <span class="text-emerald-700">Latihan TKA 2026/2027</span>
+                    </h1>
+                </div>
+            </div>
+
+            <!-- Kanan Atas: Navigasi Cepat & Audio -->
+            <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                <button onclick="openKisiKisiModal()" class="px-2.5 sm:px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 text-[11px] sm:text-xs font-bold flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-file-lines text-amber-600"></i>
+                    <span class="hidden sm:inline">Lihat Kisi-Kisi (25 Soal)</span>
+                    <span class="sm:hidden">Kisi-Kisi</span>
+                </button>
+                <button id="btnToggleSound" onclick="toggleSound()" class="p-1.5 sm:p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs transition" title="Suara Efek Game">
+                    <i id="soundIcon" class="fa-solid fa-volume-high text-emerald-600"></i>
+                </button>
+                <button id="btnNavHome" onclick="returnToHome()" class="hidden px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-[11px] sm:text-xs font-bold flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Beranda</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= VIEW 1: BERANDA (HOME SCREEN SATU LAYAR RESPONSIF LAPTOP & GAWAI) ================= -->
+    <main id="viewBeranda" class="relative z-10 flex-1 min-h-0 max-w-[1440px] w-full mx-auto px-3 sm:px-5 py-2 flex flex-col justify-between overflow-y-auto md:overflow-hidden">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-2.5 sm:gap-3.5 items-start my-auto w-full">
+
+            <!-- KOLOM KIRI (7 KOLOM DI LAPTOP): KISI-KISI, FORM SISWA, & KOTAK PEMBAHASAN -->
+            <div class="md:col-span-7 flex flex-col gap-2 sm:gap-2.5 w-full">
+
+                <!-- 1. KOLOM KISI-KISI TKA -->
+                <section class="beranda-glass-card rounded-2xl border-2 border-amber-300/90 shadow-sm p-2.5 sm:p-3">
+                    <div class="flex items-center justify-between gap-2.5">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white flex items-center justify-center shrink-0 shadow-sm">
+                                <i class="fa-solid fa-clipboard-list text-sm sm:text-base"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <h2 class="text-xs sm:text-sm font-extrabold text-slate-900 truncate">Kisi-Kisi TKA Bahasa Indonesia 2026/2027</h2>
+                                <p class="text-[10px] sm:text-[11px] font-medium text-slate-600 truncate">
+                                    Standar PISA/AKM, HOTS, & Taksonomi SOLO (14 PG, 8 PGK, 3 Uraian • 25 Soal)
+                                </p>
+                            </div>
+                        </div>
+                        <button onclick="openKisiKisiModal()" class="px-3 py-1.5 sm:py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-[11px] sm:text-xs flex items-center gap-1.5 shadow-sm transition shrink-0">
+                            <i class="fa-solid fa-eye"></i>
+                            <span>Baca Kisi-Kisi</span>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- 2. FORM PENDAFTARAN SISWA & PILIHAN MODE BERMAIN -->
+                <section class="beranda-glass-card rounded-2xl border-2 border-emerald-500 shadow-md p-3 sm:p-3.5 relative overflow-hidden">
+                    <div class="flex items-center gap-2.5 mb-2 sm:mb-2.5">
+                        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-emerald-600 to-teal-600 text-white flex items-center justify-center shadow-sm shrink-0">
+                            <i class="fa-solid fa-person-running text-sm sm:text-base"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <h2 class="text-xs sm:text-sm md:text-base font-extrabold text-slate-900 leading-tight">Arena Lomba Lari TKA Siswa</h2>
+                            <p class="text-[10px] sm:text-[11px] font-medium text-slate-600 truncate">Isi nama & kelas, pilih mode bermain, lewati rintangan, dan selesaikan 25 soal!</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-3 mb-2 sm:mb-2.5">
+                        <!-- Input Nama Siswa -->
+                        <div class="sm:col-span-7">
+                            <label for="inputStudentName" class="block text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">
+                                Nama Lengkap Siswa <span class="text-rose-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <i class="fa-solid fa-user-graduate absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                                <input type="text" id="inputStudentName" placeholder="Contoh: Ahmad Fauzi" 
+                                    class="w-full pl-8 pr-3 py-1.5 sm:py-2 rounded-xl border border-slate-300 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-200 outline-none text-xs font-semibold text-slate-800 bg-white transition">
+                            </div>
+                        </div>
+
+                        <!-- Pilihan Kelas (9A, 9B, 9C, 9D) -->
+                        <div class="sm:col-span-5">
+                            <label class="block text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">
+                                Pilih Kelas <span class="text-rose-500">*</span>
+                            </label>
+                            <div class="grid grid-cols-4 gap-1.5" id="classButtonGroup">
+                                <button type="button" onclick="selectClass('9A')" data-kelas="9A" class="kelas-btn py-1.5 sm:py-2 rounded-xl border-2 border-emerald-600 bg-emerald-600 text-white font-extrabold text-xs transition shadow-sm">
+                                    9A
+                                </button>
+                                <button type="button" onclick="selectClass('9B')" data-kelas="9B" class="kelas-btn py-1.5 sm:py-2 rounded-xl border-2 border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 font-extrabold text-xs transition">
+                                    9B
+                                </button>
+                                <button type="button" onclick="selectClass('9C')" data-kelas="9C" class="kelas-btn py-1.5 sm:py-2 rounded-xl border-2 border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 font-extrabold text-xs transition">
+                                    9C
+                                </button>
+                                <button type="button" onclick="selectClass('9D')" data-kelas="9D" class="kelas-btn py-1.5 sm:py-2 rounded-xl border-2 border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 font-extrabold text-xs transition">
+                                    9D
+                                </button>
+                            </div>
+                            <input type="hidden" id="selectedClassInput" value="9A">
+                        </div>
+                    </div>
+
+                    <!-- Pilihan Mode: Bermain Sendiri atau Satu Kelas -->
+                    <div class="mb-2.5">
+                        <label class="block text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">
+                            Pilih Mode Perlombaan
+                        </label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <!-- Bermain Sendiri -->
+                            <div id="modeCardSolo" onclick="selectGameMode('solo')" class="cursor-pointer rounded-xl border-2 border-emerald-600 bg-emerald-50/70 p-2 sm:p-2.5 flex items-start gap-2 transition">
+                                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center shrink-0 text-xs mt-0.5">
+                                    <i class="fa-solid fa-user-astronaut"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex items-center justify-between gap-1">
+                                        <span class="font-extrabold text-[11px] sm:text-xs text-slate-900 truncate">Bermain Sendiri</span>
+                                        <i id="checkSolo" class="fa-solid fa-circle-check text-emerald-600 text-xs shrink-0"></i>
+                                    </div>
+                                    <p class="text-[10px] sm:text-[11px] text-slate-600 leading-tight mt-0.5 line-clamp-2">
+                                        Lari mandiri melewati rintangan untuk 25 soal TKA.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Satu Kelas (Multiplayer Live) -->
+                            <div id="modeCardClass" onclick="selectGameMode('class')" class="cursor-pointer rounded-xl border-2 border-slate-200 bg-white hover:bg-slate-50 p-2 sm:p-2.5 flex items-start gap-2 transition">
+                                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center shrink-0 text-xs mt-0.5">
+                                    <i class="fa-solid fa-users-rays"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex items-center justify-between gap-1">
+                                        <span class="font-extrabold text-[11px] sm:text-xs text-slate-900 truncate">Satu Kelas</span>
+                                        <i id="checkClass" class="fa-regular fa-circle text-slate-400 text-xs shrink-0"></i>
+                                    </div>
+                                    <p class="text-[10px] sm:text-[11px] text-slate-600 leading-tight mt-0.5 line-clamp-2">
+                                        Berlomba bersama teman sekelas dengan label nama!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Opsi Tambahan Saat Mode Satu Kelas Dipilih -->
+                        <div id="classMateBotOption" class="hidden mt-1.5 bg-sky-50 border border-sky-200 rounded-xl px-2.5 py-1.5 flex flex-wrap items-center justify-between gap-2">
+                            <div class="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-sky-900 font-medium">
+                                <i class="fa-solid fa-satellite-dish text-sky-600"></i>
+                                <span id="liveOnlineRunnersText">Pemain aktif: 1 siswa</span>
+                            </div>
+                            <label class="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-bold text-sky-800 cursor-pointer">
+                                <input type="checkbox" id="chkIncludeSimClassmates" checked class="rounded text-sky-600 focus:ring-sky-500">
+                                <span>Tampilkan pelari teman kelas</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Tombol Mulai Lomba Lari -->
+                    <button onclick="startRaceGame()" class="btn-game w-full py-2 sm:py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md">
+                        <i class="fa-solid fa-flag-checkered text-sm sm:text-base"></i>
+                        <span>MULAI LOMBA LARI & KERJAKAN 25 SOAL TKA</span>
+                    </button>
+                </section>
+
+                <!-- 3. KOTAK PEMBAHASAN (TERKUNCI DI AWAL, TERBUKA SETELAH 25 SOAL SELESAI) -->
+                <section id="homePembahasanBox" class="beranda-glass-card rounded-2xl border-2 border-slate-300 p-2.5 sm:p-3 shadow-sm transition-all">
+                    <div class="flex items-center justify-between gap-2.5">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <div id="pembahasanLockIconWrap" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 text-base shadow-inner">
+                                <i id="pembahasanLockIcon" class="fa-solid fa-lock"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-1.5">
+                                    <span id="pembahasanStatusBadge" class="px-2 py-0.2 rounded-full text-[9px] sm:text-[10px] font-extrabold uppercase bg-slate-200 text-slate-800">
+                                        TERKUNCI
+                                    </span>
+                                    <span class="text-[10px] font-bold text-slate-600 hidden sm:inline">25 Butir Soal & Rubrik SOLO</span>
+                                </div>
+                                <h3 class="text-xs sm:text-sm font-extrabold text-slate-900 truncate">
+                                    Kotak Pembahasan Lengkap & Skor Akhir TKA
+                                </h3>
+                                <p id="pembahasanDescText" class="text-[10px] sm:text-[11px] font-medium text-slate-700 leading-tight line-clamp-1 sm:line-clamp-2">
+                                    Selesaikan lomba lari hingga <strong>Soal ke-25</strong> untuk membuka pembahasan & skor akhirmu!
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="shrink-0">
+                            <button id="btnOpenPembahasanFromHome" onclick="handleClickKotakPembahasan()" disabled
+                                class="px-3 sm:px-4 py-2 rounded-xl bg-slate-200 text-slate-500 font-extrabold text-[11px] sm:text-xs flex items-center justify-center gap-1.5 cursor-not-allowed transition">
+                                <i class="fa-solid fa-key"></i>
+                                <span>Buka Pembahasan</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Banner Skor Siswa yang Muncul Ketika Diklik / Sudah Selesai -->
+                    <div id="homeStudentScorePreview" class="hidden mt-2 pt-2 border-t border-emerald-200 flex items-center justify-between gap-2 bg-white rounded-xl p-2 shadow-sm">
+                        <div class="min-w-0">
+                            <div id="homePreviewIdentity" class="text-xs font-extrabold text-slate-900 truncate">Ahmad Fauzi (Kelas 9A)</div>
+                            <div id="homePreviewDetail" class="text-[10px] text-emerald-700 font-semibold">Selesai 25/25 Soal • Skor: 78 / 86</div>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <div class="text-right">
+                                <div class="text-[9px] font-bold text-slate-400 uppercase">Nilai</div>
+                                <div id="homePreviewFinalScore" class="text-base sm:text-lg font-black text-emerald-600 leading-none">90.7</div>
+                            </div>
+                            <button onclick="openPembahasanView(0)" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] flex items-center gap-1 shadow">
+                                <i class="fa-solid fa-book-open-reader"></i> Detail
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- KOLOM KANAN ATAS (5 KOLOM DI LAPTOP): SATU KOTAK SPREADSHEET SKOR MURID (TERKUNCI) -->
+            <div class="md:col-span-5 flex flex-col items-end w-full">
+                <section id="teacherSpreadsheetContainer" class="w-full md:max-w-md ml-auto beranda-glass-card rounded-2xl border-2 border-slate-800 shadow-lg overflow-hidden transition-all duration-300">
+                    <!-- Header Kotak Spreadsheet Pojok Kanan Atas -->
+                    <div class="bg-gradient-to-r from-slate-800 to-slate-900 text-white px-3.5 py-2 flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-2 min-w-0">
+                            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 flex items-center justify-center text-xs sm:text-sm shrink-0">
+                                <i class="fa-solid fa-table-list"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-1.5">
+                                    <h2 class="text-xs sm:text-sm font-extrabold truncate">Spreadsheet Skor Murid</h2>
+                                    <span id="teacherLockBadge" class="px-1.5 py-0.2 rounded text-[9px] sm:text-[10px] font-extrabold bg-rose-500/20 text-rose-300 border border-rose-400/30 shrink-0">
+                                        <i class="fa-solid fa-lock mr-0.5"></i>TERKUNCI
+                                    </span>
+                                </div>
+                                <p class="text-[10px] text-slate-300 truncate">
+                                    Rekap otomatis nilai akhir siswa (<span id="lockedRecordCounter">0 Data</span>)
+                                </p>
+                            </div>
+                        </div>
+
+                        <button id="btnLockTeacherSheet" onclick="lockTeacherSpreadsheet()" class="hidden px-2 py-1 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-bold text-[10px] flex items-center gap-1 transition shrink-0">
+                            <i class="fa-solid fa-lock"></i> Kunci
+                        </button>
+                    </div>
+
+                    <!-- STATE 1: SATU KOTAK RINGKAS TERKUNCI DI POJOK KANAN ATAS -->
+                    <div id="spreadsheetLockedView" class="p-3 bg-slate-50/95">
+                        <div class="flex items-center gap-2.5 mb-2">
+                            <div class="w-8 h-8 rounded-xl bg-amber-100 border border-amber-300 text-amber-600 flex items-center justify-center text-sm shrink-0">
+                                <i class="fa-solid fa-user-lock"></i>
+                            </div>
+                            <p class="text-[10px] sm:text-[11px] text-slate-600 leading-snug">
+                                Spreadsheet ini dalam kondisi <strong>terkunci</strong>. Hanya Guru yang dapat membuka daftar nilai murid.
+                            </p>
+                        </div>
+
+                        <!-- Form Kode Akses Guru (Hanya terbuka dengan kode romi06) -->
+                        <div class="bg-white p-2 rounded-xl border border-slate-200 shadow-inner">
+                            <label for="inputTeacherPin" class="block text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-slate-600 mb-1">
+                                Kode Akses Guru
+                            </label>
+                            <div class="flex gap-1.5">
+                                <input type="password" id="inputTeacherPin" placeholder="Masukkan kode guru..." 
+                                    onkeydown="if(event.key==='Enter') unlockTeacherSpreadsheet()"
+                                    class="flex-1 min-w-0 px-2.5 py-1.5 rounded-lg border border-slate-300 focus:border-emerald-600 outline-none text-xs font-bold tracking-wider">
+                                <button onclick="unlockTeacherSpreadsheet()" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-1 transition shrink-0">
+                                    <i class="fa-solid fa-key"></i> Buka
+                                </button>
+                            </div>
+                            <p id="teacherPinError" class="hidden text-[10px] font-bold text-rose-600 mt-1">
+                                <i class="fa-solid fa-circle-exclamation mr-1"></i>Kode akses tidak sesuai! Hanya guru yang dapat membuka.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- STATE 2: TERBUKA (SPREADSHEET INTERAKTIF GURU) -->
+                    <div id="spreadsheetUnlockedView" class="hidden flex flex-col">
+                        <!-- Toolbar Filter & Export Spreadsheet -->
+                        <div class="p-2 bg-slate-100 border-b border-slate-200 space-y-1.5">
+                            <!-- Ringkasan Statistik Kelas -->
+                            <div class="grid grid-cols-3 gap-1.5">
+                                <div class="bg-white p-1 rounded-lg border border-slate-200/80 text-center">
+                                    <div class="text-[9px] font-bold text-slate-400 uppercase">Total Murid</div>
+                                    <div id="statTotalStudents" class="text-xs sm:text-sm font-black text-slate-800">0</div>
+                                </div>
+                                <div class="bg-white p-1 rounded-lg border border-slate-200/80 text-center">
+                                    <div class="text-[9px] font-bold text-slate-400 uppercase">Rata-Rata</div>
+                                    <div id="statAvgScore" class="text-xs sm:text-sm font-black text-emerald-600">0.0</div>
+                                </div>
+                                <div class="bg-white p-1 rounded-lg border border-slate-200/80 text-center">
+                                    <div class="text-[9px] font-bold text-slate-400 uppercase">Tertinggi</div>
+                                    <div id="statMaxScore" class="text-xs sm:text-sm font-black text-amber-600">0.0</div>
+                                </div>
+                            </div>
+
+                            <!-- Filter Kelas & Tombol Unduh CSV -->
+                            <div class="flex flex-wrap items-center justify-between gap-1.5">
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[11px] font-bold text-slate-600">Kelas:</span>
+                                    <select id="filterSheetClass" onchange="renderSpreadsheetTable()" class="px-2 py-1 rounded-lg border border-slate-300 bg-white text-[11px] font-bold text-slate-800">
+                                        <option value="ALL">Semua (9A-9D)</option>
+                                        <option value="9A">Kelas 9A</option>
+                                        <option value="9B">Kelas 9B</option>
+                                        <option value="9C">Kelas 9C</option>
+                                        <option value="9D">Kelas 9D</option>
+                                    </select>
+                                </div>
+
+                                <div class="flex items-center gap-1">
+                                    <button onclick="copySpreadsheetToClipboard()" class="px-2 py-1 rounded-lg bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 font-bold text-[11px] flex items-center gap-1 transition" title="Salin ke Excel / Google Sheets">
+                                        <i class="fa-regular fa-copy"></i> Salin
+                                    </button>
+                                    <button onclick="exportSpreadsheetCSV()" class="px-2 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] flex items-center gap-1 transition">
+                                        <i class="fa-solid fa-file-csv"></i> CSV
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tabel Spreadsheet Nilai -->
+                        <div class="overflow-auto max-h-[180px] sm:max-h-[230px] bg-white">
+                            <table class="w-full sheet-table border-collapse text-left">
+                                <thead class="sticky top-0 z-10 shadow-sm">
+                                    <tr>
+                                        <th class="w-8 text-center">#</th>
+                                        <th>Nama Siswa</th>
+                                        <th class="w-14 text-center">Kelas</th>
+                                        <th class="w-16 text-center">Skor</th>
+                                        <th class="w-16 text-center">Nilai</th>
+                                        <th class="w-20 text-center">Waktu</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="spreadsheetTableBody">
+                                    <!-- Diisi otomatis via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Footer Spreadsheet -->
+                        <div class="px-2.5 py-1.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-[10px] text-slate-500">
+                            <span>Formula: (Skor / 86) × 100</span>
+                            <span class="font-semibold text-emerald-700">Otomatis Terekam</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ================= VIEW 2: ARENA GAME LOMBA LARI (SATU LAYAR PENUH TANPA SALING MENUTUPI) ================= -->
+    <section id="viewGameRunner" class="hidden relative z-10 flex-1 min-h-0 flex flex-col max-w-[1440px] w-full mx-auto px-3 sm:px-5 py-2 overflow-hidden">
+        
+        <!-- HUD Atas Game Lomba Lari (Dilengkapi Bar Daftar Pelari agar Tidak Menutupi Lintasan Kanvas) -->
+        <div class="shrink-0 bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 shadow-sm p-2 sm:p-2.5 mb-2">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+                <!-- Info Pelari Aktif -->
+                <div class="flex items-center gap-2 min-w-0">
+                    <div id="hudClassAvatar" class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-600 text-white font-black flex items-center justify-center text-xs shadow shrink-0">
+                        9A
+                    </div>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-1.5">
+                            <span id="hudPlayerName" class="font-extrabold text-slate-900 text-xs sm:text-sm truncate">Nama Siswa</span>
+                            <span id="hudGameModeBadge" class="px-2 py-0.2 rounded-full text-[9px] sm:text-[10px] font-bold bg-emerald-100 text-emerald-800 shrink-0">
+                                Bermain Sendiri
+                            </span>
+                        </div>
+                        <div class="text-[10px] sm:text-[11px] text-slate-500 flex items-center gap-1.5">
+                            <span>Skor Lari: <strong id="hudRunScore" class="text-emerald-700 font-extrabold">0</strong>m</span>
+                            <span>•</span>
+                            <span>Pos Berikutnya: <strong id="hudNextTargetScore" class="text-amber-600 font-extrabold">100</strong>m</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bar Daftar Pelari di Lintasan (Ditempatkan di HUD agar tidak menutupi kanvas lari) -->
+                <div class="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1 max-w-full sm:max-w-md overflow-x-auto">
+                    <span class="text-[10px] font-extrabold uppercase text-slate-500 shrink-0 flex items-center gap-1">
+                        <i class="fa-solid fa-ranking-star text-amber-500"></i>
+                        <span>Pelari (<span id="liveRunnerCountBadge">1</span>):</span>
+                    </span>
+                    <div id="liveLeaderboardList" class="flex items-center gap-1.5 text-[10px] overflow-x-auto whitespace-nowrap">
+                        <!-- Diisi via loop game -->
+                    </div>
+                </div>
+
+                <!-- Progres Soal (X / 25) & Kecepatan -->
+                <div class="flex items-center gap-2 shrink-0 ml-auto sm:ml-0">
+                    <div class="text-right">
+                        <div class="text-[9px] font-bold uppercase text-slate-400">Pos Soal TKA</div>
+                        <div class="text-xs sm:text-sm font-black text-slate-900 leading-none">
+                            <span id="hudCurrentQuestionIndex" class="text-emerald-600">0</span> / 25 Soal
+                        </div>
+                    </div>
+
+                    <button id="btnToggleSprint" onclick="toggleSprintSpeed()" class="px-2.5 py-1.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 font-extrabold text-[11px] sm:text-xs flex items-center gap-1 transition" title="Percepat Lari Menuju Soal Berikutnya">
+                        <i class="fa-solid fa-bolt text-amber-600"></i>
+                        <span id="sprintLabel">1x</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Progress Bar Lintasan 25 Soal -->
+            <div class="mt-1.5 pt-1.5 border-t border-slate-100">
+                <div class="flex items-center justify-between text-[9px] sm:text-[10px] font-bold text-slate-500 mb-1">
+                    <span>START</span>
+                    <span id="hudObstacleStatus" class="text-emerald-700 truncate px-2">Lompati rintangan untuk mempercepat skor menuju pos soal berikutnya!</span>
+                    <span>FINIS (25 SOAL)</span>
+                </div>
+                <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+                    <div id="hudProgressBar" class="h-full bg-gradient-to-r from-emerald-500 via-teal-500 to-sky-500 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KANVAS GAME LOMBA LARI (BERSIH TANPA TERTUTUP KOTAK LAIN) -->
+        <div class="relative flex-1 min-h-[170px] bg-sky-100 rounded-2xl border-2 sm:border-4 border-white shadow-md overflow-hidden select-none">
+            <canvas id="runnerCanvas"></canvas>
+
+            <!-- Overlay Notifikasi Pos Soal / Rintangan -->
+            <div id="canvasBannerOverlay" class="hidden absolute top-2.5 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full bg-slate-900/85 text-white font-extrabold text-[11px] sm:text-xs shadow-md backdrop-blur-sm pointer-events-none flex items-center gap-1.5 whitespace-nowrap">
+                <i class="fa-solid fa-bell text-amber-400"></i>
+                <span id="canvasBannerText">Memasuki Pos Soal!</span>
+            </div>
+        </div>
+
+        <!-- TOMBOL KONTROL GAME LOMBA LARI (DI LUAR KANVAS) -->
+        <div class="shrink-0 mt-2 flex items-center justify-center gap-2.5 sm:gap-4">
+            <button onmousedown="triggerPlayerJump()" ontouchstart="triggerPlayerJump(); event.preventDefault();" 
+                class="btn-game flex-1 sm:flex-initial px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl bg-gradient-to-b from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 border-2 border-emerald-300 shadow">
+                <i class="fa-solid fa-arrow-up-long"></i>
+                <span>LOMPATI RINTANGAN (SPASI / SENTUH)</span>
+            </button>
+
+            <button onmousedown="triggerPlayerBoost()" ontouchstart="triggerPlayerBoost(); event.preventDefault();"
+                class="btn-game px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-gradient-to-b from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-900 font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 border-2 border-amber-200 shadow shrink-0">
+                <i class="fa-solid fa-person-running"></i>
+                <span>SPRINT (+SKOR)</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- ================= VIEW 3: PEMBAHASAN SATU PER SATU SOAL & SKOR AKHIR (SATU LAYAR LAPTOP & GAWAI) ================= -->
+    <section id="viewPembahasan" class="hidden relative z-10 flex-1 min-h-0 flex flex-col max-w-[1440px] w-full mx-auto px-3 sm:px-5 py-2 gap-2 overflow-hidden">
+        
+        <!-- Banner Skor Siswa & Tombol Kembali ke Beranda (Ringkas) -->
+        <div class="shrink-0 bg-gradient-to-r from-emerald-800 via-teal-800 to-slate-900 rounded-2xl px-3.5 py-2 text-white shadow-md">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-white/15 border border-white/25 flex items-center justify-center text-base sm:text-lg text-amber-300 shrink-0">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-1.5 flex-wrap">
+                            <h2 id="pembahasanStudentTitle" class="text-xs sm:text-sm md:text-base font-black truncate">
+                                Nama Siswa — Kelas 9A
+                            </h2>
+                            <span class="px-2 py-0.2 rounded-full bg-amber-400/20 border border-amber-300/40 text-amber-200 text-[9px] sm:text-[10px] font-bold">
+                                <i class="fa-solid fa-check-double mr-1"></i>Terekam di Spreadsheet
+                            </span>
+                        </div>
+                        <p class="text-[10px] sm:text-[11px] text-emerald-100 hidden sm:block">
+                            Rekapitulasi skor akhirmu dan pembahasan analitis satu per satu untuk ke-25 butir soal TKA.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Kotak Skor Akhir & Tombol Kembali ke Beranda -->
+                <div class="flex items-center gap-2.5 bg-white/10 backdrop-blur-md rounded-xl px-2.5 py-1 border border-white/15 ml-auto sm:ml-0">
+                    <div class="pr-2.5 border-r border-white/20">
+                        <div class="text-[8px] sm:text-[9px] font-bold uppercase text-emerald-200">Skor Mentah</div>
+                        <div id="pembahasanRawScore" class="text-xs sm:text-sm font-black text-white">0 / 86 Poin</div>
+                        <div id="pembahasanCorrectBreakdown" class="hidden"></div>
+                    </div>
+                    <div class="pr-1">
+                        <div class="text-[8px] sm:text-[9px] font-bold uppercase text-amber-300">Nilai Akhir</div>
+                        <div id="pembahasanFinalNilai" class="text-lg sm:text-xl font-black text-amber-300 leading-none">0.0</div>
+                    </div>
+                    <!-- Kotak Kembali ke Beranda -->
+                    <button onclick="returnToHome()" class="px-2.5 sm:px-3 py-1.5 rounded-xl bg-white hover:bg-emerald-50 text-slate-900 font-extrabold text-[11px] sm:text-xs flex items-center gap-1.5 shadow transition">
+                        <i class="fa-solid fa-house-chimney text-emerald-600"></i>
+                        <span>Kembali ke Beranda</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigasi Nomor Soal (1 s.d. 25) -->
+        <div class="shrink-0 bg-white/95 rounded-xl border border-slate-200 px-2.5 py-1.5 shadow-sm flex items-center justify-between gap-2 overflow-x-auto">
+            <div id="pembahasanNumberGrid" class="flex items-center gap-1 shrink-0">
+                <!-- Diisi via JS -->
+            </div>
+            <div class="hidden lg:flex items-center gap-2 text-[10px] font-bold shrink-0">
+                <span class="flex items-center gap-1 text-emerald-700"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Tepat</span>
+                <span class="flex items-center gap-1 text-amber-700"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Parsial</span>
+                <span class="flex items-center gap-1 text-rose-700"><span class="w-2 h-2 rounded-full bg-rose-500"></span> Belum Tepat</span>
+            </div>
+        </div>
+
+        <!-- Kontainer Pembahasan Satu per Satu Soal (Tidak Saling Menutupi di Gawai maupun Laptop) -->
+        <div class="flex-1 min-h-0 bg-white rounded-2xl border border-slate-200 shadow-md flex flex-col overflow-hidden">
+            <!-- Bar Navigasi Satu per Satu -->
+            <div class="shrink-0 bg-slate-50 border-b border-slate-200 px-3 sm:px-4 py-1.5 flex items-center justify-between gap-2">
+                <div class="flex items-center gap-1.5 min-w-0">
+                    <span id="revQNumberBadge" class="px-2 py-0.5 rounded-lg bg-emerald-600 text-white font-black text-[11px] sm:text-xs shrink-0">
+                        Soal No. 1 / 25
+                    </span>
+                    <span id="revQDomainBadge" class="px-2 py-0.5 rounded-lg bg-slate-200 text-slate-700 font-bold text-[10px] sm:text-[11px] truncate">
+                        Artikel Ilmiah Populer
+                    </span>
+                    <span id="revQSoloBadge" class="hidden sm:inline-block px-2 py-0.5 rounded-lg bg-amber-100 text-amber-800 font-bold text-[10px] shrink-0">
+                        Multistruktural (L1)
+                    </span>
+                </div>
+
+                <div class="flex items-center gap-1.5 shrink-0">
+                    <button id="btnRevPrev" onclick="stepPembahasanQuestion(-1)" class="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 border border-slate-300 text-slate-700 font-extrabold text-[11px] sm:text-xs flex items-center gap-1 transition">
+                        <i class="fa-solid fa-chevron-left"></i> <span class="hidden sm:inline">Sebelumnya</span>
+                    </button>
+                    <button id="btnRevNext" onclick="stepPembahasanQuestion(1)" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[11px] sm:text-xs flex items-center gap-1 transition">
+                        <span class="hidden sm:inline">Berikutnya</span> <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Isi Detail Soal: Split Atas-Bawah di Gawai, Kiri-Kanan di Laptop agar Keduanya Terlihat Jelas -->
+            <div class="flex-1 min-h-0 p-2.5 sm:p-3.5 flex flex-col md:grid md:grid-cols-12 gap-2.5 sm:gap-3.5 overflow-hidden">
+                <!-- Kolom Wacana / Teks Stimulus -->
+                <div class="h-[38%] md:h-full md:col-span-6 bg-slate-50 rounded-xl border border-slate-200 p-2.5 sm:p-3.5 overflow-y-auto">
+                    <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-700 mb-1 flex items-center gap-1.5">
+                        <i class="fa-solid fa-book-open"></i> Wacana / Teks Bacaan
+                    </div>
+                    <div id="revPassageContent" class="text-xs text-slate-700 leading-relaxed space-y-2"></div>
+                </div>
+
+                <!-- Kolom Pertanyaan, Jawaban Siswa vs Kunci, & Analisis Pembahasan -->
+                <div class="h-[62%] md:h-full md:col-span-6 space-y-2.5 overflow-y-auto pr-1">
+                    <div class="bg-white rounded-xl border border-slate-200 p-2.5 sm:p-3">
+                        <div class="text-[10px] font-bold uppercase text-slate-400 mb-0.5">Pertanyaan</div>
+                        <div id="revQuestionPrompt" class="text-xs sm:text-sm font-bold text-slate-900 leading-relaxed"></div>
+                        <div id="revOptionsList" class="mt-2 space-y-1 text-xs"></div>
+                    </div>
+
+                    <!-- Perbandingan Jawaban Murid & Kunci Jawaban -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div id="revStudentAnsCard" class="p-2.5 rounded-xl border-2 border-slate-200 bg-slate-50">
+                            <div class="text-[10px] font-extrabold uppercase text-slate-500">Jawaban Kamu</div>
+                            <div id="revStudentAnswerText" class="text-xs font-extrabold text-slate-900 mt-0.5">-</div>
+                            <div id="revStudentPointEarned" class="text-[11px] font-bold text-emerald-700 mt-0.5">Skor: 0 Poin</div>
+                        </div>
+                        <div class="p-2.5 rounded-xl border-2 border-emerald-300 bg-emerald-50/70">
+                            <div class="text-[10px] font-extrabold uppercase text-emerald-700">Kunci Jawaban Resmi</div>
+                            <div id="revOfficialKeyText" class="text-xs font-extrabold text-emerald-950 mt-0.5">-</div>
+                            <div id="revMaxPointInfo" class="text-[11px] font-semibold text-emerald-700 mt-0.5">Bobot Maksimal: 3 Poin</div>
+                        </div>
+                    </div>
+
+                    <!-- Kotak Pembahasan Analitis -->
+                    <div class="p-3 rounded-xl bg-amber-50/90 border-2 border-amber-300">
+                        <div class="flex items-center gap-1.5 text-amber-900 font-extrabold text-xs mb-1">
+                            <i class="fa-solid fa-lightbulb text-amber-500 text-sm"></i>
+                            <span>Pembahasan Analitis & Pedoman Penskoran</span>
+                        </div>
+                        <p id="revExplanationText" class="text-xs text-slate-800 leading-relaxed"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= MODAL 1: PENGERJAAN SOAL SAAT CHECKPOINT LOMBA LARI (RESPONSIF 1 LAYAR) ================= -->
+    <div id="modalQuestionCheckpoint" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 overflow-hidden">
+        <div class="bg-white rounded-2xl sm:rounded-3xl border-2 border-emerald-500 shadow-2xl max-w-5xl w-full h-[94dvh] flex flex-col overflow-hidden">
+            <!-- Header Modal Soal -->
+            <div class="shrink-0 bg-gradient-to-r from-emerald-700 to-teal-700 text-white px-3.5 sm:px-5 py-2.5 flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <span id="qModalBadgeNum" class="px-2.5 py-1 rounded-xl bg-amber-400 text-slate-950 font-black text-xs sm:text-sm shadow shrink-0">
+                        POS SOAL 1 / 25
+                    </span>
+                    <div class="min-w-0">
+                        <h3 id="qModalDomainTitle" class="text-xs sm:text-sm font-extrabold leading-tight truncate">
+                            Artikel Ilmiah Populer (Amblesan Tanah & Intrusi)
+                        </h3>
+                        <p id="qModalMetaSubtitle" class="text-[10px] sm:text-[11px] text-emerald-100 truncate">
+                            Taraf SOLO: Multistruktural (L1) • Bentuk: Pilihan Ganda
+                        </p>
+                    </div>
+                </div>
+                <span class="hidden sm:inline-block px-3 py-1 rounded-full bg-white/15 text-xs font-bold shrink-0">
+                    Jawab soal untuk lanjut berlari!
+                </span>
+            </div>
+
+            <!-- Body Modal Soal (Split Atas-Bawah di Gawai, Kiri-Kanan di Laptop agar Tidak Saling Menutupi) -->
+            <div class="flex-1 min-h-0 p-2.5 sm:p-4 flex flex-col md:grid md:grid-cols-12 gap-2.5 sm:gap-4 overflow-hidden">
+                <!-- Kolom Wacana -->
+                <div class="h-[38%] md:h-full md:col-span-6 bg-slate-50 rounded-xl sm:rounded-2xl border border-slate-200 p-3 overflow-y-auto">
+                    <div class="sticky top-0 bg-slate-50 pb-1.5 mb-2 border-b border-slate-200 flex items-center justify-between">
+                        <span class="text-[11px] font-extrabold uppercase text-emerald-800">
+                            <i class="fa-solid fa-file-alt mr-1"></i>Wacana / Stimulus Soal
+                        </span>
+                        <span class="text-[10px] text-slate-400">Gulir bacaan</span>
+                    </div>
+                    <div id="qModalPassageBody" class="text-xs sm:text-sm text-slate-800 leading-relaxed space-y-2.5"></div>
+                </div>
+
+                <!-- Kolom Pertanyaan & Input Jawaban -->
+                <div class="h-[62%] md:h-full md:col-span-6 flex flex-col justify-between overflow-hidden">
+                    <div class="flex-1 min-h-0 overflow-y-auto space-y-2.5 pr-1">
+                        <div class="bg-emerald-50/60 border border-emerald-200 rounded-xl p-2.5 sm:p-3.5">
+                            <div class="text-[10px] font-extrabold uppercase text-emerald-700 mb-0.5">Butir Pertanyaan</div>
+                            <div id="qModalPromptText" class="text-xs sm:text-sm font-extrabold text-slate-900 leading-relaxed"></div>
+                        </div>
+
+                        <!-- Area Interaktif Pilihan Jawaban (PG / PGK Tabel / PGK Checkbox / Uraian) -->
+                        <div id="qModalInteractiveArea" class="space-y-2"></div>
+
+                        <p id="qModalValidationWarning" class="hidden text-xs font-bold text-rose-600 bg-rose-50 border border-rose-200 rounded-xl p-2">
+                            <i class="fa-solid fa-triangle-exclamation mr-1"></i>Silakan pilih atau tuliskan jawabanmu terlebih dahulu sebelum melanjutkan lomba lari!
+                        </p>
+                    </div>
+
+                    <!-- Tombol Kirim Jawaban & Lanjutkan Lomba Lari -->
+                    <div class="shrink-0 pt-2.5 mt-2 border-t border-slate-200 flex items-center justify-end">
+                        <button onclick="submitCheckpointAnswer()" class="btn-game w-full sm:w-auto px-5 py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md">
+                            <span>Kirim Jawaban & Lanjutkan Lomba Lari</span>
+                            <i class="fa-solid fa-person-running text-base"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MODAL 2: KISI-KISI LENGKAP ASESMEN TKA (25 SOAL) ================= -->
+    <div id="modalKisiKisi" class="hidden fixed inset-0 z-50 bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6">
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-5xl w-full max-h-[90vh] flex flex-col overflow-hidden">
+            <div class="bg-slate-900 text-white px-5 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-clipboard-list text-amber-400 text-xl"></i>
+                    <div>
+                        <h3 class="text-base font-extrabold">Kisi-Kisi Asesmen Standar Mutu TKA Bahasa Indonesia SMP</h3>
+                        <p class="text-xs text-slate-300">SMP Muh. 2 Depok — Tahun Pelajaran 2026/2027 (Fase D Kelas IX)</p>
+                    </div>
+                </div>
+                <button onclick="closeKisiKisiModal()" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-auto p-4 sm:p-6">
+                <table class="w-full sheet-table border-collapse text-left">
+                    <thead>
+                        <tr>
+                            <th class="w-12 text-center">No</th>
+                            <th>Domain / Materi Teks Baru</th>
+                            <th>Indikator Soal Asesmen</th>
+                            <th class="w-36">Taraf SOLO</th>
+                            <th class="w-20 text-center">Bentuk</th>
+                        </tr>
+                    </thead>
+                    <tbody id="kisiKisiTableBody"></tbody>
+                </table>
+            </div>
+
+            <div class="bg-slate-50 border-t border-slate-200 px-5 py-3 flex items-center justify-between">
+                <span class="text-xs text-slate-500 font-medium">Distribusi: 14 PG Biasa, 8 PG Kompleks, 3 Uraian Berjenjang SOLO (Total 25 Butir)</span>
+                <button onclick="closeKisiKisiModal()" class="px-4 py-2 rounded-xl bg-slate-800 text-white font-bold text-xs">
+                    Tutup Kisi-Kisi
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MODAL 3: RUANG TUNGGU GARIS FINIS (MODE SATU KELAS) ================= -->
+    <div id="modalFinishSync" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl border-2 border-emerald-500 shadow-2xl max-w-lg w-full p-6 text-center space-y-4">
+            <div class="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-4xl mx-auto shadow-inner">
+                <i class="fa-solid fa-flag-checkered"></i>
+            </div>
+            <h3 class="text-xl font-black text-slate-900">Garis Finis Tercapai! (25/25 Soal)</h3>
+            <p id="finishSyncStatusText" class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Skor akhirmu telah tersimpan di Spreadsheet Guru. Menunggu teman sekelas menyelesaikan soal ke-25...
+            </p>
+            <div id="finishClassmatesList" class="bg-slate-50 rounded-2xl p-3 border border-slate-200 max-h-40 overflow-y-auto space-y-1.5 text-left text-xs"></div>
+            <div class="pt-2">
+                <button onclick="proceedToPembahasanAfterFinish()" class="btn-game w-full py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-book-open-reader"></i>
+                    <span>Lihat Skor Akhir & Buka Pembahasan Satu per Satu</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= TOAST NOTIFIKASI (PENGGANTI ALERT) ================= -->
+    <div id="toastNotification" class="fixed bottom-5 right-5 z-50 hidden px-4 py-3 rounded-2xl bg-slate-900 text-white text-xs sm:text-sm font-bold shadow-xl flex items-center gap-2.5 border border-slate-700">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+        <span id="toastMessage">Notifikasi</span>
+    </div>
+
+    <!-- ================= DATA NASKAH SOAL, WACANA, & LOGIKA APLIKASI ================= -->
+    <script>
+        /* ============================================================================
+           1. DATA KISI-KISI, WACANA, & 25 BUTIR SOAL TKA BAHASA INDONESIA (LENGKAP)
+           ============================================================================ */
+        const WACANA_DATA = {
+            w1: `
+                <h4 class="font-extrabold text-slate-900 text-sm mb-2">Krisis Amblesan Tanah dan Intrusi Salin di Pesisir Jawa</h4>
+                <p class="mb-2.5 text-justify">Fenomena amblesan tanah (<em>land subsidence</em>) yang berpadu dengan naiknya permukaan air laut kini menjadi ancaman nyata bagi stabilitas kawasan dataran rendah aluvial pesisir utara dan muara sungai di Pulau Jawa. Berdasarkan survei geodetik satelit dan pemantauan hidrologi terkini dari Badan Riset dan Inovasi Nasional (BRIN), laju penurunan muka tanah di beberapa titik wilayah industri dan permukiman padat telah mencapai kecepatan 6 hingga 11 sentimeter per tahun. Fenomena ini bukan sekadar perubahan elevasi fisik bentang alam, melainkan bom waktu ekologis yang mempercepat rob permanen dan merusak fondasi infrastruktur dasar perkotaan secara masif.</p>
+                <p class="mb-2.5 text-justify">Penyebab fundamental dari laju amblesan yang ekstrem ini bertumpu pada ekstraksi air tanah dalam (<em>deep aquifer</em>) secara berlebihan tanpa diimbangi resapan alami yang memadai. Ketika volume air yang terperangkap di antara pori-pori lempung aluvial dipompa secara terus-menerus oleh sumur bor komersial, tekanan hidrolik antarbutir tanah lenyap seketika. Akibatnya, struktur matriks tanah mengalami konsolidasi permanen—butiran lempung memadat dan memampat ke bawah, sehingga volume daratan menyusut. Kekosongan tekanan hidrolik ini memicu tekanan negatif yang menarik massa air asin laut merembes jauh masuk ke daratan, sebuah proses bencana senyap yang dikenal sebagai intrusi salin.</p>
+                <p class="text-justify">Dampak dari proses ini telah melumpuhkan sanitasi dan ketahanan air ribuan kepala keluarga. Sumur gali dangkal milik warga yang semula menyuplai air tawar bersih kini berasa payau dan sarat akan ion klorida berlebih yang memicu korosi pipa besi serta merusak kesuburan lahan pertanian pekarangan. Upaya mitigasi tidak dapat lagi mengandalkan pembangunan tanggul beton penahan rob semata. Para ahli hidrologi menegaskan bahwa moratorium mutlak izin sumur bor industri, revitalisasi kawasan tangkapan air melalui sumur resapan dalam, serta perluasan sambungan pipa air permukaan olahan menjadi benteng pertahanan ekologis yang mutlak diwujudkan sebelum daratan tenggelam permanen.</p>
+            `,
+            w2: `
+                <h4 class="font-extrabold text-slate-900 text-sm mb-2">Wacana Diskusi: Algoritma Media Sosial dan Privasi Remaja</h4>
+                <p class="mb-2.5 text-justify">Kehadiran algoritma kurasi konten di platform media sosial berbasis video pendek telah menciptakan pergeseran radikal dalam gaya hidup generasi muda, khususnya kalangan pelajar jenjang sekolah menengah. Kubu pendukung memandang teknologi algoritma pintar ini sebagai etalase demokratisasi bakat yang luar biasa. Melalui personalisasi arus informasi, siswa dapat dengan mudah menemukan komunitas literasi, membagikan portofolio karya kreatif, mengakses tutorial sains interaktif, serta membangun jejaring kolaborasi melampaui batas geografis sekolah. Algoritma dianggap mempermudah pelajar untuk menjadi kreator konten edukatif yang produktif dan mandiri secara intelektual.</p>
+                <p class="mb-2.5 text-justify">Sebaliknya, kubu pendidik dan psikolog perkembangan bersikap skeptis serta memperingatkan adanya bahaya jeratan 'gelembung filter' (<em>filter bubble</em>) dan mekanisme pembajakan perhatian (<em>attention hijacking</em>). Algoritma yang dirancang mengoptimalkan waktu tontonan (<em>screen time</em>) demi monetisasi iklan terus membombardir siswa dengan stimulus visual cepat yang memicu lonjakan dopamin instan. Akibatnya, terjadi penurunan drastis pada kapasitas fokus mendalam (<em>deep work</em>) dan daya tahan mental siswa saat membaca wacana buku cetak yang panjang. Selain itu, fenomena <em>Fear of Missing Out</em> (FOMO) dan pemajangan kehidupan pribadi secara berlebihan demi metrik tanda suka (<em>likes</em>) mengikis batasan privasi serta memicu kecemasan komparatif yang merusak harga diri anak.</p>
+                <p class="text-justify">Oleh sebab itu, respons bijak dari institusi pendidikan bukanlah memusuhi teknologi dengan memberlakukan pemblokiran total gawai pintar di ruang kelas. Langkah strategis yang perlu ditempuh adalah menumbuhkan kecakapan literasi digital kritis (<em>algorithmic literacy</em>). Sekolah harus melatih siswa untuk memahami cara kerja sistem rekomendasi mesin, mengatur jeda digital secara sadar (<em>digital mindfulness</em>), dan mengubah posisi mereka dari sekadar konsumen pasif yang dikendalikan oleh umpan otomatis menjadi arsitek digital yang berdaulat atas waktu dan integritas pemikirannya.</p>
+            `,
+            w3: `
+                <h4 class="font-extrabold text-slate-900 text-sm mb-2">Laporan Hasil Observasi: Hutan Mangrove Muara Baros</h4>
+                <p class="mb-2.5 text-justify">Kawasan konservasi hutan mangrove Muara Baros yang terletak di muara Sungai Opak, pesisir selatan Kabupaten Bantul, merupakan ekosistem lahan basah estuari buatan hasil rehabilitasi vegetasi berbasis komunitas lokal sejak tahun 2018. Berdasarkan pengamatan lapangan pada plot permanen seluas 12 hektare, formasi vegetasi didominasi oleh spesies bakau kurap (<em>Rhizophora mucronata</em>) dan api-api putih (<em>Avicennia marina</em>). Hutan mangrove ini membentuk zona penyangga esensial yang memisahkan daratan laguna pasang-surut dari ancaman erosi abrasi ombak kuat Samudra Hindia.</p>
+                <p class="mb-2.5 text-justify">Secara morfologis, <em>Rhizophora mucronata</em> memiliki adaptasi fisiologis perakaran tunjang (<em>stilt root</em>) yang mencuat bercabang dari batang utama ke dalam lapisan substrat lumpur berpasir. Jalinan akar lengkung yang rapat dan kokoh ini tidak hanya berfungsi sebagai penyangga mekanis pohon dari hempasan gelombang pasang setinggi 2 meter, melainkan juga bertindak sebagai perangkap sedimen organik dan penyerap bahan pencemar nutrien. Di celah-celah perakaran tunjang inilah terbentuk lingkungan perairan tenang yang kaya detritus, menjadikannya tempat pemijahan alami (<em>nursery ground</em>) bagi kepiting bakau (<em>Scylla serrata</em>) dan benih ikan bandeng muara.</p>
+                <p class="mb-3 text-justify">Keberhasilan suksesi hutan mangrove Muara Baros tercermin nyata pada kenaikan parameter fisik tutupan tajuk dan pemulihan keanekaragaman hayati satwa liar. Kawasan ini kini telah bertransformasi menjadi koridor persinggahan vital bagi kawanan burung air migran jalur Asia Timur–Australasia yang singgah mencari mangsa bentos kecil di lumpur pasang.</p>
+                <div class="overflow-x-auto border border-slate-300 rounded-xl bg-white">
+                    <div class="bg-emerald-800 text-white text-[11px] font-extrabold px-3 py-1.5 text-center">
+                        DIAGRAM DATA REKAPITULASI BIO-EKOLOGIS PLOT OBSERVASI MANGROVE MUARA BAROS (2020–2026)
+                    </div>
+                    <table class="w-full text-[11px] text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 border-b border-slate-300 font-bold">
+                                <th class="p-2 border-r border-slate-200">Periode Pengamatan</th>
+                                <th class="p-2 border-r border-slate-200">Tutupan Kanopi</th>
+                                <th class="p-2 border-r border-slate-200">Kerapatan/Ha</th>
+                                <th class="p-2 border-r border-slate-200">Kepiting Bakau</th>
+                                <th class="p-2">Burung Air (Avifauna)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-slate-200">
+                                <td class="p-2 font-semibold">2020 (Awal Rehabilitasi)</td>
+                                <td class="p-2">22%</td>
+                                <td class="p-2">1.450 batang</td>
+                                <td class="p-2">14 ekor / 100m²</td>
+                                <td class="p-2">6 spesies</td>
+                            </tr>
+                            <tr class="border-b border-slate-200 bg-slate-50">
+                                <td class="p-2 font-semibold">2023 (Fase Transisi)</td>
+                                <td class="p-2">54%</td>
+                                <td class="p-2">3.200 batang</td>
+                                <td class="p-2">48 ekor / 100m²</td>
+                                <td class="p-2">16 spesies</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2 font-semibold">2026 (Klimaks Mapan)</td>
+                                <td class="p-2 font-bold text-emerald-700">84%</td>
+                                <td class="p-2 font-bold text-emerald-700">5.600 batang</td>
+                                <td class="p-2 font-bold text-emerald-700">112 ekor / 100m²</td>
+                                <td class="p-2 font-bold text-emerald-700">31 spesies (Lokal & Migran)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `,
+            w4: `
+                <h4 class="font-extrabold text-slate-900 text-sm mb-2">Ulasan Kritis Novel Remaja: 'Lembah Pelangi di Balik Kabut'</h4>
+                <p class="mb-2.5 text-justify">Novel remaja <em>'Lembah Pelangi di Balik Kabut'</em> karya sastrawan muda Danang Wicaksono hadir sebagai karya fiksi yang memikat di tengah langkanya bacaan bertema pengabdian sosial bagi siswa sekolah menengah. Buku setebal 288 halaman terbitan Pustaka Nusantara ini mengangkat petualangan tiga sekawan siswa peraih beasiswa sains yang diterjunkan ke desa pelosok lereng pegunungan untuk membantu warga lokal membangun pembangkit listrik tenaga mikrohidro sederhana. Alih-alih menghadirkan kisah petualangan fantasi yang mengawang-awang, karya ini membumi dengan menyoroti dinamika benturan antara pola pikir ilmiah anak muda dan mitos pantangan leluhur desa.</p>
+                <p class="mb-2.5 text-justify">Keunggulan mutlak novel ini terletak pada kekayaan riset etnografis serta kepiawaian penulis dalam menjahit dialog antartokoh yang cair, cerdas, dan kaya akan muatan edukasi fisika terapan tanpa terkesan menggurui. Penulis mampu melukiskan latar alam pegunungan dengan bahasa puitis yang membangkitkan imaji pembaca. Meskipun demikian, kelemahan mulai terlihat saat novel memasuki sepertiga bagian akhir; peralihan menuju babak resolusi konflik terasa tergesa-gesa. Perubahan sikap tetua desa yang awalnya menolak keras proyek turbin air menjadi sangat melunak terjadi begitu tiba-tiba tanpa melalui dinamika dialog pembuktian yang cukup matang, seolah penulis diburu oleh tenggat jumlah halaman.</p>
+                <p class="text-justify">Kendati memiliki sedikit kekurangan pada penyelesaian alur dramatik, novel ini tetap menjadi karya yang sangat berharga dan direkomendasikan secara hangat. Buku ini bukan hanya rujukan bacaan literasi yang memperkaya wawasan ekologis dan sains kontekstual bagi murid SMP, melainkan juga media pengingat yang menyentuh bagi para pendidik tentang pentingnya memupuk ketulusan hati dan kepekaan sosial di balik penguasaan prestasi akademik anak didik.</p>
+            `,
+            w5: `
+                <h4 class="font-extrabold text-slate-900 text-sm mb-1">JUDUL LAKON: 'BATAS KEJUJURAN DI BILIK KACA'</h4>
+                <p class="text-[11px] text-slate-500 italic mb-2.5">(Karya: Tim MGMP Sastra Remaja)</p>
+                <p class="mb-2.5 text-justify bg-white p-2.5 rounded-xl border border-slate-200 text-xs"><strong>Prolog & Setting Panggung:</strong> Ruang redaksi mading sekolah, sore hari pukul 16.30 WIB. Di atas meja besar berserakan lembaran draf artikel, gawai, dan laptop yang menyala. Lampu ruangan temaram. Di luar jendela terdengar suara gerimis hujan. Darius duduk termenung memegangi kepala, tampak sangat gelisah. Rani sedang merapikan dokumen di map merah seraya menatap jam dinding dengan cemas.</p>
+                <div class="space-y-2 text-xs">
+                    <p><strong>RANI :</strong> <em>(Berdiri melipat tangan, nada suara tegas namun cemas)</em> Darius, setengah jam lagi panitia Lomba Karya Ilmiah Remaja Nasional menutup portal pendaftaran. Kamu sudah memeriksa ulang berkas esai yang kamu buat kemarin?</p>
+                    <p><strong>DARIUS :</strong> <em>(Menunduk lesu, suaranya tercekat pelan)</em> Rani... aku... aku menemukan sesuatu yang buruk pada bab tiga draf esaiku.</p>
+                    <p><strong>RANI :</strong> <em>(Mendekat ke meja Darius, mengerutkan kening)</em> Maksudmu buruk bagaimana? Analisis datamu keliru?</p>
+                    <p><strong>DARIUS :</strong> <em>(Menggeser laptop ke arah Rani dengan tangan gemetar)</em> Asisten aplikasi pintar generatif yang kugunakan akhir pekan lalu menyusun dua paragraf tinjauan pustaka itu... rupanya menjiplak utuh argumen riset seorang dosen tanpa mencantumkan rujukan sumber. Indeks kemiripannya mencapai empat puluh persen!</p>
+                    <p><strong>RANI :</strong> <em>(Terperangah, menarik napas panjang)</em> Astaga, Darius! Ini plagiasi akademik namanya! Kamu tidak bisa mengirim berkas yang mengandung tulisan orang lain tanpa atribusi. Hapus sekarang juga!</p>
+                    <p><strong>DARIUS :</strong> <em>(Meremas rambutnya, pandangan nanar)</em> Tapi Rani, jika kuhapus dan kutulis ulang bagian itu sekarang, waktunya mustahil cukup! Kesempatanku memenangi beasiswa impian itu lenyap seketika. Orang tuaku... mereka sudah terlanjur bangga mengira aku pasti menang!</p>
+                    <p><strong>PAK HADI :</strong> <em>(Tiba-tiba melangkah masuk dari pintu samping dengan tenang, meletakkan payung basah di sudut)</em> Darius... kebanggaan yang didirikan di atas panggung kepalsuan hanyalah istana pasir yang menunggu ombak pertama untuk runtuh.</p>
+                    <p><strong>DARIUS :</strong> <em>(Terkejut menoleh ke pintu)</em> Pak Hadi... Bapak mendengar semuanya?</p>
+                    <p><strong>PAK HADI :</strong> <em>(Tersenyum teduh, menepuk pundak Darius dengan penuh kebapakan)</em> Menelan kegagalan karena menjunjung tinggi etika kejujuran jauh lebih mulia daripada mengalungkan medali emas hasil merampas keringat intelektual orang lain. Tarik berkasmu, Darius. Hadapi batas ini dengan kepala tegak sebagai ilmuwan sejati.</p>
+                </div>
+            `,
+            w6: `
+                <div class="space-y-4">
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200">
+                        <h4 class="font-extrabold text-slate-900 text-sm">TEKS A: PUISI — MEMBACA TANDA-TANDA</h4>
+                        <p class="text-[11px] text-slate-500 italic mb-2">(Karya: Taufiq Ismail)</p>
+                        <div class="italic text-xs space-y-2 text-slate-800 leading-relaxed">
+                            <p>Ada sesuatu yang rasanya mulai lepas dari tangan kita<br>dan meluncur lewat sela-sela jari jemari<br>Ada sesuatu yang mulanya tak begitu jelas<br>tapi kini kita mulai merindukannya</p>
+                            <p>Kita saksikan burung-burung berkicau di pagi hari<br>kini semakin langka menyapa semak belukar<br>Kita saksikan sungai yang mengalir bening<br>kini berbuih hitam menolak bayang-bayang pepohonan<br>Bumi semakin pengap oleh asap dan keluh kesah</p>
+                            <p>Tuhan, ampuni kami<br>karena kami telah membaca tanda-tanda itu<br>namun kami pura-pura buta dan tuli<br>berlari mengejar fatamorgana di ujung hari.</p>
+                        </div>
+                    </div>
+                    <div class="bg-amber-50/70 p-3.5 rounded-xl border border-amber-200">
+                        <h4 class="font-extrabold text-slate-900 text-sm mb-1.5">TEKS B: PANTUN NASIHAT PELAJAR</h4>
+                        <div class="italic text-xs text-slate-800 leading-relaxed">
+                            Pergi berlayar ke Pulau Bangka,<br>
+                            <strong>(..........................................)</strong><br>
+                            Tuntutlah ilmu selagi muda,<br>
+                            Kelak dewasa petik kejayaan.
+                        </div>
+                    </div>
+                </div>
+            `,
+            w7: `
+                <div class="bg-white p-4 rounded-xl border border-slate-300 font-serif text-xs leading-relaxed space-y-2">
+                    <div class="text-center border-b-2 border-slate-800 pb-2 mb-2 font-sans">
+                        <div class="font-bold text-xs">PEMERINTAH KABUPATEN SLEMAN</div>
+                        <div class="font-bold text-xs">DINAS PENDIDIKAN DAN KEBUDAYAAN</div>
+                        <div class="font-extrabold text-xs">MUSYAWARAH GURU MATA PELAJARAN (MGMP) BAHASA INDONESIA SMP</div>
+                        <div class="text-[10px] text-slate-600">Sekretariat: Jl. Magelang Km. 11, Tridadi, Sleman, D.I. Yogyakarta 55511</div>
+                    </div>
+                    <div class="flex justify-between">
+                        <div>
+                            <div>Nomor : 088/MGMP-BI/XI/2026</div>
+                            <div>Lampiran : 1 (satu) Berkas Panduan</div>
+                            <div>Hal : Undangan Lokakarya Penyusunan Bank Soal TKA Literasi Berjenjang</div>
+                        </div>
+                        <div>10 November 2026</div>
+                    </div>
+                    <div class="pt-2">
+                        <strong>Yth. Kepala SMP/MTs Negeri dan Swasta<br>Se-Kabupaten Sleman</strong>
+                    </div>
+                    <p>Dengan hormat,<br>Dalam rangka standardisasi instrumen evaluasi kemampuan akademik dan literasi membaca peserta didik jenjang sekolah menengah pertama, kami mengharap penugasan guru pengampu Bahasa Indonesia pada:</p>
+                    <div class="pl-4">
+                        hari, tanggal : Selasa, 17 November 2026<br>
+                        waktu : Pukul 08.00 s.d. 14.30 WIB<br>
+                        tempat : Aula Barat Balai Penjaminan Mutu Pendidikan (BPMP) D.I. Yogyakarta<br>
+                        agenda : Pelatihan Konstruksi Soal HOTS Berbasis Taksonomi SOLO dan Verifikasi Distraktor
+                    </div>
+                    <p>Demikian surat undangan ini kami sampaikan. Atas perhatian dan kerja sama Saudara, kami ucapkan terima kasih.</p>
+                </div>
+            `
+        };
+
+        // 25 Butir Soal Sesuai Naskah Dokumen & Pedoman Penskoran (Total Maks = 86 Poin)
+        // Catatan Bobot: Agar total 25 soal tepat = 86 poin sesuai formula dokumen:
+        // 17 butir PG (14 PG x 3 poin + 3 PG x 4 poin = 54) + 5 PGK x 4 poin (20) + 3 Uraian x 4 poin (12) = 86 poin!
+        const QUESTIONS_DATA = [
+            {
+                no: 1,
+                domain: "Artikel Ilmiah Populer (Amblesan Tanah & Intrusi)",
+                indikator: "Menentukan fakta numerik data penurunan tanah dan penyebab geologisnya.",
+                solo: "Multistruktural (L1)",
+                bentuk: "PG",
+                type: "pg",
+                maxPoints: 3,
+                wacanaKey: "w1",
+                prompt: "Berdasarkan teks di atas, laju penurunan muka tanah di kawasan pesisir padat penduduk menurut survei geodetik dan penyebab utamanya adalah ....",
+                options: [
+                    "A. 2 hingga 4 sentimeter per tahun yang dipicu oleh getaran seismik patahan lempeng aktif laut dalam",
+                    "B. 6 hingga 11 sentimeter per tahun yang dipicu oleh ekstraksi air tanah dalam secara masif tanpa imbuhan alami",
+                    "C. 15 hingga 20 sentimeter per tahun yang dipicu oleh pengikisan pasir pantai akibat gelombang pasang monsoon",
+                    "D. 25 sentimeter per tahun yang dipicu oleh beratnya beban gedung pencakar langit di atas tanah pasir"
+                ],
+                correct: 1,
+                keyLabel: "B",
+                pembahasan: "Paragraf pertama dan kedua secara eksplisit menyatakan bahwa laju amblesan tanah mencapai 6 hingga 11 sentimeter per tahun akibat ekstraksi air tanah dalam (deep aquifer) secara berlebihan tanpa diimbangi resapan alami."
+            },
+            {
+                no: 2,
+                domain: "Artikel Ilmiah Populer (Amblesan Tanah & Intrusi)",
+                indikator: "Menyimpulkan makna istilah teknis 'intrusi salin' dalam konteks geohidrologi.",
+                solo: "Relasional (L2)",
+                bentuk: "PG",
+                type: "pg",
+                maxPoints: 3,
+                wacanaKey: "w1",
+                prompt: "Makna istilah 'intrusi salin' dalam konteks dinamika geohidrologi pada paragraf kedua teks tersebut adalah ....",
+                options: [
+                    "A. peristiwa penguapan air tanah dangkal akibat kenaikan suhu permukaan daratan pesisir",
+                    "B. perembesan atau masuknya massa air asin laut ke dalam lapisan akuifer air tawar di daratan",
+                    "C. proses pembentukan kristal garam alami di saluran pembuangan limbah industri cair",
+                    "D. pengendapan lumpur muara sungai yang bercampur dengan sampah polimer plastik"
+                ],
+                correct: 1,
+                keyLabel: "B",
+                pembahasan: "Intrusi salin didefinisikan secara geologis pada paragraf kedua sebagai peristiwa perembesan atau masuknya massa air asin laut mengisi rongga akuifer air tawar di daratan akibat kekosongan tekanan hidrolik."
+            },
+            {
+                no: 3,
+                domain: "Artikel Ilmiah Populer (Amblesan Tanah & Intrusi)",
+                indikator: "Menilai validitas pernyataan (Benar/Salah) mengenai kausalitas pori tanah dan air laut.",
+                solo: "Relasional (L2)",
+                bentuk: "PGK",
+                type: "pgk_table",
+                maxPoints: 4,
+                wacanaKey: "w1",
+                prompt: "Cermatilah pernyataan-pernyataan berikut berdasarkan isi teks di atas! Tentukan apakah pernyataan tersebut BENAR atau SALAH!",
+                columns: ["Benar", "Salah"],
+                statements: [
+                    "Konsolidasi tanah terjadi karena pemompaan air tanah menghilangkan tekanan hidrolik di antara pori-pori lempung aluvial.",
+                    "Pembangunan tanggul beton penahan air laut dipandang oleh para ahli hidrologi sebagai satu-satunya solusi permanen menuntaskan masalah.",
+                    "Tingginya kadar ion klorida pada sumur warga yang terkena dampak intrusi salin memicu korosi pipa dan merusak kesuburan tanah."
+                ],
+                correct: ["Benar", "Salah", "Benar"],
+                keyLabel: "Benar - Salah - Benar",
+                pembahasan: "Pernyataan 1 BENAR (hilangnya tekanan hidrolik pori tanah memicu konsolidasi); Pernyataan 2 SALAH (tanggul beton bukan solusi satu-satunya, perlu moratorium sumur bor dan sumur resapan); Pernyataan 3 BENAR (ion klorida berlebih memicu korosi pipa besi dan merusak kesuburan tanah)."
+            },
+            {
+                no: 4,
+                domain: "Artikel Ilmiah Populer (Amblesan Tanah & Intrusi)",
+                indikator: "Mengevaluasi asumsi implisit dan keberpihakan argumentasi penulis dalam wacana.",
+                solo: "Ext. Abstract (L3)",
+                bentuk: "PG",
+                type: "pg",
+                maxPoints: 4,
+                wacanaKey: "w1",
+                prompt: "Asumsi implisit dan sudut pandang objektif yang dibangun penulis pada keseluruhan Wacana 1 adalah ....",
+                options: [
+                    "A. penurunan muka tanah merupakan bencana geologis yang sepenuhnya diakibatkan oleh perubahan iklim global tanpa andil aktivitas manusia",
+                    "B. keberadaan tanggul beton pantai merupakan pemborosan anggaran yang sama sekali tidak memberi manfaat perlindungan bagi masyarakat",
+                    "C. krisis lingkungan pesisir berakar dari tata kelola sumber daya air yang eksploitatif sehingga penanganannya menuntut pemulihan hidrologis dari hulu ke hilir",
+                    "D. masyarakat pesisir diimbau segera meninggalkan pemukiman mereka karena daratan dipastikan tenggelam dalam rentang lima tahun mendatang"
+                ],
+                correct: 2,
+                keyLabel: "C",
+                pembahasan: "Penulis menyoroti akar masalah pada tata kelola air tanah yang eksploitatif dan menegaskan perlunya moratorium sumur bor, revitalisasi sumur resapan, serta penyediaan air permukaan olahan."
+            },
+            {
+                no: 5,
+                domain: "Teks Diskusi (Algoritma Medsos & Privasi)",
+                indikator: "Mengidentifikasi isu sentral pro dan kontra kurasi konten di kalangan remaja.",
+                solo: "Multistruktural (L1)",
+                bentuk: "PG",
+                type: "pg",
+                maxPoints: 3,
+                wacanaKey: "w2",
+                prompt: "Isu sentral yang diperdebatkan dalam teks diskusi di atas adalah ....",
+                options: [
+                    "A. tuntutan kenaikan batas usia minimum bagi kepemilikan telepon pintar di kalangan pelajar",
+                    "B. dampak sistem rekomendasi algoritma media sosial terhadap pengembangan bakat versus erosi fokus mental dan privasi siswa",
+                    "C. perbandingan biaya langganan aplikasi media edukasi berbayar dengan media sosial gratis",
+                    "D. kegagalan platform digital dalam menghapus tayangan hiburan yang tidak mendidik bagi anak"
+                ],
+                correct: 1,
+                keyLabel: "B",
+                pembahasan: "Fokus teks mendiskusikan polarisasi antara peluang portofolio bakat kreatif digital (Pro) versus bahaya adiksi dopamin, penurunan fokus membaca mendalam, dan erosi privasi siswa (Kontra)."
+            },
+            {
+                no: 6,
+                domain: "Teks Diskusi (Algoritma Medsos & Privasi)",
+                indikator: "Menganalisis fungsi sintaksis dan retoris konjungsi pertentangan antarkalimat.",
+                solo: "Relasional (L2)",
+                bentuk: "PG",
+                type: "pg",
+                maxPoints: 3,
+                wacanaKey: "w2",
+                prompt: "Cermatilah konjungsi antarkalimat pada kutipan: 'Sebaliknya, kubu pendidik dan psikolog perkembangan bersikap skeptis...'. Fungsi sintaksis dan retoris konjungsi 'Sebaliknya' pada kalimat tersebut adalah ....",
+                options: [
+                    "A. menandai kelanjutan logis yang memperkuat bukti empiris pada paragraf pertama",
+                    "B. mengalihkan perspektif pembahasan dari argumentasi afirmatif (pro) menuju sudut pandang tandingan yang kritis (kontra)",
+                    "C. menyatakan hubungan konsesif yang membatalkan seluruh pernyataan sebelumnya",
+                    "D. menyimpulkan kesepakatan akhir antardua pihak yang sedang berdiskusi"
+                ],
+                correct: 1,
+                keyLabel: "B",
+                pembahasan: "Konjungsi antarkalimat 'Sebaliknya' berfungsi menggeser pandangan afirmatif (pro) di paragraf pertama menuju pandangan tandingan yang skeptis/kritis (kontra) di paragraf kedua."
+            },
+            {
+                no: 7,
+                domain: "Teks Diskusi (Algoritma Medsos & Privasi)",
+                indikator: "Mengelompokkan gagasan kutipan ke dalam tabel kategori argumen Pro atau Kontra.",
+                solo: "Relasional (L2)",
+                bentuk: "PGK",
+                type: "pgk_table",
+                maxPoints: 4,
+                wacanaKey: "w2",
+                prompt: "Kelompokkan gagasan-gagasan berikut ke dalam kategori ARGUMEN PRO atau ARGUMEN KONTRA terhadap pengaruh algoritma media sosial berdasarkan Wacana 2!",
+                columns: ["Argumen Pro", "Argumen Kontra"],
+                statements: [
+                    "Membuka ruang demokratisasi bakat untuk berbagi portofolio karya kreatif dan mengakses komunitas belajar lintas wilayah.",
+                    "Memicu pembajakan perhatian dan kepuasan dopamin instan yang merusak rentang konsentrasi membaca buku teks panjang.",
+                    "Menciptakan gelembung filter serta kecemasan komparatif akibat terobsesi pada metrik tanda suka dan popularitas semu."
+                ],
+                correct: ["Argumen Pro", "Argumen Kontra", "Argumen Kontra"],
+                keyLabel: "Pro - Kontra - Kontra",
+                pembahasan: "Pernyataan pertama mencerminkan manfaat positif algoritma (Argumen Pro); sedangkan pernyataan kedua dan ketiga memaparkan dampak negatif psikologis dan kognitif (Argumen Kontra)."
+            },
+            {
+                no: 8,
+                domain: "Teks Diskusi (Algoritma Medsos & Privasi)",
+                indikator: "Merumuskan simpulan sintesis berimbang (jalan tengah literasi digital) dari teks.",
+                solo: "Ext. Abstract (L3)",
+                bentuk: "PG",
+                type: "pg",
+                maxPoints: 4,
+                wacanaKey: "w2",
+                prompt: "Simpulan sintesis (jalan tengah) yang diajukan oleh penulis pada paragraf penutup teks diskusi tersebut bermuara pada penegasan bahwa ....",
+                options: [
+                    "A. pihak berwenang wajib menutup seluruh platform media sosial yang menyasar pangsa pasar remaja di bawah usia 17 tahun",
+                    "B. sekolah perlu memfasilitasi pembelajaran kecakapan literasi algoritma kritis dan kesadaran digital agar siswa menjadi pengguna yang berdaulat",
+                    "C. penggunaan media sosial sebaiknya dibebaskan tanpa aturan agar daya kreasi siswa tidak terbelenggu rasa takut",
+                    "D. para pengajar harus menyerahkan pengawasan sepenuhnya kepada platform digital karena teknologi memiliki sistem filternya sendiri"
+                ],
+                correct: 1,
+                keyLabel: "B",
+                pembahasan: "Jalan tengah yang diusulkan penulis pada paragraf ketiga adalah edukasi literasi algoritma kritis (algorithmic literacy) dan kesadaran digital (digital mindfulness) di sekolah daripada sekadar memblokir gawai."
+            },
+            {
+                no: 9,
+                domain: "Teks LHO (Hutan Mangrove Muara Baros)",
+                indikator: "Membedakan pernyataan fakta objektif lapangan dari pernyataan opini subjektif.",
+                solo: "Multistruktural (L1)",
+                bentuk: "PG",
+                type: "pg",
+                maxPoints: 3,
+                wacanaKey: "w3",
+                prompt: "Kalimat dalam teks tersebut yang memuat pernyataan fakta objektif hasil observasi lapangan adalah ....",
+                options: [
+                    "A. Suasana hutan mangrove Muara Baros terasa sangat menyejukkan hati dan memesona siapa saja yang memandangnya.",
+                    "B. Formasi vegetasi di kawasan konservasi seluas 12 hektare tersebut didominasi oleh spesies Rhizophora mucronata dan Avicennia marina.",
+                    "C. Kepiting bakau di Muara Baros diyakini memiliki cita rasa daging yang paling lezat dibandingkan kepiting muara lainnya.",
+                    "D. Keindahan burung migran di pesisir selatan pasti membuat para peneliti merasa betah berlama-lama tinggal di sana."
+                ],
+                correct: 1,
+                keyLabel: "B",
+                pembahasan: "Pilihan B menyajikan data objektif terukur (luasan 12 hektare) dan identifikasi taksonomi ilmiah (Rhizophora mucronata dan Avicennia marina) tanpa kata sifat subjektif/emotif."
+            },
+            {
+                no: 10,
+                domain: "Teks LHO (Hutan Mangrove Muara Baros)",
+                indikator: "Menganalisis struktur kalimat deskripsi bagian morfologi akar penunjang mangrove.",
+                solo: "Relasional (L2)",
+                bentuk: "PG",
+                type: "pg",
+                maxPoints: 3,
+                wacanaKey: "w3",
+                prompt: "Ciri kebahasaan teks laporan hasil observasi berupa 'kalimat deskripsi bagian' ditunjukkan secara spesifik oleh kutipan ....",
+                options: [
+                    "A. Kawasan konservasi mangrove Muara Baros merupakan ekosistem lahan basah buatan yang dibangun sejak tahun 2018.",
+                    "B. Jalinan akar lengkung yang rapat mencuat bercabang dari batang utama ke substrat lumpur untuk menahan ombak setinggi 2 meter.",
+                    "C. Keberhasilan suksesi hutan mangrove Muara Baros tercermin nyata pada perbaikan ekologis lingkungan pantai.",
+                    "D. Konservasi lingkungan pantai menuntut partisipasi aktif dari seluruh elemen masyarakat di wilayah muara."
+                ],
+                correct: 1,
+                keyLabel: "B",
+                pembahasan: "Kutipan B memerinci karakteristik morfologi bagian organ akar tunjang (stilt root) pohon bakau beserta fungsi mekanisnya menahan gelombang pasang 2 meter."
+            },
+            {
+                no: 11,
+                domain: "Teks LHO (Hutan Mangrove Muara Baros)",
+                indikator: "Menginterpretasi data diagram/tabel kerapatan kanopi dan keanekaragaman avifauna.",
+                solo: "Relasional (L2)",
+                bentuk: "PGK",
+                type: "pgk_multi",
+                maxPoints: 4,
+                wacanaKey: "w3",
+                prompt: "Berdasarkan stimulus data diagram tabel pengamatan tahun 2020 s.d. 2026, pilihlah DUA kesimpulan analitis yang valid mengenai dinamika ekologis mangrove Muara Baros!",
+                options: [
+                    "A. Peningkatan tutupan kanopi dari 22% menjadi 84% berkorelasi positif dengan lonjakan keanekaragaman spesies burung air hingga 31 spesies pada tahun 2026.",
+                    "B. Kerapatan pohon mangrove mengalami penurunan drastis pada tahun 2026 akibat gagalnya pertumbuhan anakan pohon api-api putih.",
+                    "C. Populasi kepiting bakau meningkat delapan kali lipat seiring dengan pertambahan kerapatan tegakan pohon dan luas area tutupan tajuk mangrove.",
+                    "D. Luas tutupan kanopi tidak memengaruhi kehadiran burung air migran karena burung hanya mencari tempat berteduh di daratan kering."
+                ],
+                correct: [0, 2],
+                keyLabel: "A dan C",
+                pembahasan: "Data tabel membuktikan tutupan kanopi naik (22% ke 84%) sejalan dengan kenaikan spesies burung air (6 ke 31 spesies), serta populasi kepiting bakau naik tepat 8 kali lipat (dari 14 ekor menjadi 112 ekor per 100m²)."
+            },
+            {
+                no: 12,
+                domain: "Teks Resensi/Ulasan Kritis (Novel Remaja)",
+                indikator: "Menentukan fungsi struktur ulasan teks pada bagian evaluasi keunggulan karya.",
+                solo: "Unistruktural (L1)",
+                bentuk: "PG",
+                type: "pg",
+                maxPoints: 3,
+                wacanaKey: "w4",
+                prompt: "Kutipan: 'Keunggulan mutlak novel ini terletak pada kekayaan riset etnografis serta kepiawaian penulis dalam menjahit dialog antartokoh yang cair...' menduduki fungsi struktur teks ulasan bagian ....",
+                options: [
+                    "A. identitas karya dan orientasi awal penulis",
+                    "B. sinopsis jalan cerita tokoh utama",
+                    "C. evaluasi kritis (penilaian keunggulan dan kelemahan)",
+                    "D. rangkuman data penjualan buku di pasaran"
+                ],
+                correct: 2,
+                keyLabel: "C",
+                pembahasan: "Kutipan tersebut secara nyata memaparkan penilaian keunggulan riset etnografis dan kecairan dialog novel, yang merupakan inti dari struktur evaluasi dalam teks ulasan."
+            },
+            {
+                no: 13,
+                domain: "Teks Resensi/Ulasan Kritis (Novel Remaja)",
+                indikator: "Menilai ketajaman kritik terhadap kelemahan resolusi alur babak klimaks buku.",
+                solo: "Relasional (L2)",
+                bentuk: "PG",
+                type: "pg",
+                maxPoints: 3,
+                wacanaKey: "w4",
+                prompt: "Pernyataan berikut yang paling tepat merangkum kritik kelemahan novel menurut penilaian peresensi adalah ....",
+                options: [
+                    "A. latar pegunungan desa yang disajikan terasa sangat kaku dan tidak memunculkan suasana alam yang nyata",
+                    "B. resolusi konflik atas perubahan sikap tetua desa diselesaikan secara tergesa-gesa tanpa tahapan pendukung yang meyakinkan",
+                    "C. penggunaan istilah teknis pembangkit listrik tenaga mikrohidro yang terlalu membingungkan daya nalar siswa SMP",
+                    "D. tema interaksi antara sains modern dan kearifan tradisi lokal dinilai sudah sangat usang dan membosankan"
+                ],
+                correct: 1,
+                keyLabel: "B",
+                pembahasan: "Pada paragraf kedua, peresensi mengkritik kelemahan pada sepertiga bagian akhir novel, yakni resolusi perubahan sikap tetua desa yang terjadi begitu tiba-tiba/tergesa-gesa tanpa dinamika dialog pembuktian yang matang."
+            },
+            {
+                no: 14,
+                domain: "Teks Resensi/Ulasan Kritis (Novel Remaja)",
+                indikator: "Mengevaluasi kesesuaian target segmen pembaca yang direkomendasikan peresensi.",
+                solo: "Relasional (L2)",
+                bentuk: "PGK",
+                type: "pgk_multi",
+                maxPoints: 4,
+                wacanaKey: "w4",
+                prompt: "[Pilihan Ganda Kompleks] Berdasarkan isi Wacana 4, siapakah pihak-pihak yang secara tepat menjadi sasaran rekomendasi pembaca buku tersebut? (Pilihan dapat lebih dari satu)",
+                options: [
+                    "A. Peserta didik jenjang SMP yang ingin menumbuhkan wawasan sains aplikatif sekaligus kepekaan sosial kemasyarakatan.",
+                    "B. Pendidik dan pegiat literasi sekolah yang mencari bahan rujukan penguatan pendidikan karakter berbasis konteks nyata.",
+                    "C. Peneliti akademisi senior yang mengkhususkan diri pada kritik hukum tata negara dan sosiologi politik modern.",
+                    "D. Anak-anak usia taman kanak-kanak yang membutuhkan buku bergambar tanpa banyak teks deskripsi bacaan."
+                ],
+                correct: [0, 1],
+                keyLabel: "A dan B",
+                pembahasan: "Pada paragraf ketiga dinyatakan bahwa buku ini direkomendasikan bagi murid SMP (memperkaya wawasan ekologis dan sains kontekstual) serta bagi para pendidik (pengingat pentingnya memupuk ketulusan hati dan kepekaan sosial)."
+            },
+            {
+                no: 15,
+                domain: "Teks Naskah Drama ('Batas Kejujuran')",
+                indikator: "Menganalisis pemicu konflik batin tokoh utama terkait integritas akademik.",
+                solo: "Multistruktural (L1)",
+                bentuk: "PG",
+                type: "pg",
+                maxPoints: 3,
+                wacanaKey: "w5",
+                prompt: "Pemicu utama terjadinya konflik batin pada diri tokoh Darius dalam kutipan naskah drama di atas adalah ....",
+                options: [
+                    "A. perselisihan pendapat dengan Rani mengenai pembagian tugas piket membersihkan ruang redaksi mading sekolah",
+                    "B. keterlambatan panitia pusat lomba karya tulis ilmiah dalam menerbitkan surat keputusan teknis pengunggahan berkas",
+                    "C. pergulatan moral antara mengakui plagiasi mesin pada naskah esainya atau tetap mengirimkannya demi gengsi dan beasiswa",
+                    "D. kemarahan Pak Hadi terhadap ketidakmampuan Darius menyelesaikan proyek karya ilmiah tepat waktu"
+                ],
+                correct: 2,
+                keyLabel: "C",
+                pembahasan: "Konflik batin timbul karena Darius mendapati draf esainya menjiplak riset dosen akibat penggunaan aplikasi generatif tanpa atribusi, sementara waktu penutupan lomba tinggal 30 menit dan ia terbebani harapan beasiswa serta kebanggaan orang tuanya."
+            },
+            {
+                no: 16,
+                domain: "Teks Naskah Drama ('Batas Kejujuran')",
+                indikator: "Menemukan fungsi dramatik petunjuk laku (kramagung) dalam membangun karakter tokoh.",
+                solo: "Relasional (L2)",
+                bentuk: "PG",
+                type: "pg",
+                maxPoints: 3,
+                wacanaKey: "w5",
+                prompt: "Cermatilah petunjuk laku (kramagung) berikut: '(Menggeser laptop ke arah Rani dengan tangan gemetar)'. Fungsi dramatik dari petunjuk laku tersebut adalah ....",
+                options: [
+                    "A. memperlihatkan kondisi fisik perangkat komputer yang sedang mengalami gangguan teknis kelistrikan",
+                    "B. menggambarkan tekanan psikologis, ketakutan mendalam, dan rasa bersalah yang sedang dialami oleh tokoh Darius",
+                    "C. memberi instruksi agar tokoh Rani segera mematikan layar laptop yang menyala",
+                    "D. menandai bahwa adegan drama telah memasuki babak akhir cerita komedi"
+                ],
+                correct: 1,
+                keyLabel: "B",
+                pembahasan: "Kramagung 'dengan tangan gemetar' dan gestur lesu mencerminkan guncangan psikologis, ketakutan mendalam, serta beban rasa bersalah Darius saat menunjukkan bukti plagiasi pada naskahnya."
+            },
+            {
+                no: 17,
+                domain: "Teks Naskah Drama ('Batas Kejujuran')",
+                indikator: "Merefleksikan relevansi nilai moral kejujuran drama terhadap dilema etika modern.",
+                solo: "Ext. Abstract (L3)",
+                bentuk: "PGK",
+                type: "pgk_multi",
+                maxPoints: 4,
+                wacanaKey: "w5",
+                prompt: "Pilihlah pernyataan-pernyataan berikut yang mencerminkan refleksi nilai moral naskah drama tersebut terhadap etika kehidupan sosial masa kini! (Pilihan benar lebih dari satu)",
+                options: [
+                    "A. Integritas moral dan kejujuran pribadi memiliki kedudukan yang jauh lebih luhur daripada sebuah trofi kemenangan yang semu.",
+                    "B. Pemanfaatan perangkat kecerdasan artifisial wajib dibarengi dengan tanggung jawab verifikasi sumber dan etika orisinalitas karya.",
+                    "C. Berbuat curang diizinkan asalkan didorong oleh niat mulia untuk membahagiakan dan membanggakan orang tua di rumah.",
+                    "D. Keberanian mengakui kekeliruan dan menanggung risiko kegagalan adalah tanda kedewasaan karakter manusia sejati."
+                ],
+                correct: [0, 1, 3],
+                keyLabel: "A, B, dan D",
+                pembahasan: "Pernyataan A, B, dan D secara tepat merefleksikan kejujuran akademik di atas medali palsu, tanggung jawab etis saat menggunakan AI generatif, dan keberanian mengakui kekeliruan sebagai ilmuwan sejati."
+            },
+            {
+                no: 18,
+                domain: "Puisi Penyair Terkenal (Taufiq Ismail)",
+                indikator: "Menganalisis makna konotatif diksi dan imaji auditif/visual dalam bait puisi.",
+                solo: "Relasional (L2)",
+                bentuk: "PG",
+                type: "pg",
+                maxPoints: 3,
+                wacanaKey: "w6",
+                prompt: "Makna konotatif frasa 'berbuih hitam menolak bayang-bayang pepohonan' pada bait kedua Teks A adalah ....",
+                options: [
+                    "A. sungai yang airnya meluap membanjiri area perkebunan akibat curah hujan deras",
+                    "B. kondisi air sungai yang tercemar berat oleh limbah kotor sehingga kehilangan kejernihan alaminya",
+                    "C. pantulan warna bayangan daun pohon jati yang rimbun di dasar aliran sungai",
+                    "D. penampakan bebatuan karang berwarna hitam legam di sepanjang tebing sungai"
+                ],
+                correct: 1,
+                keyLabel: "B",
+                pembahasan: "Diksi 'berbuih hitam menolak bayang-bayang pepohonan' melukiskan air sungai yang semula mengalir bening namun kini tercemar parah oleh limbah sehingga pekat dan kehilangan daya pantul jernihnya."
+            },
+            {
+                no: 19,
+                domain: "Puisi Rakyat (Pantun Nasihat Pelajar)",
+                indikator: "Melengkapi larik sampiran pantun rumpang sesuai rima akhir dan pola suku kata.",
+                solo: "Multistruktural (L1)",
+                bentuk: "PG",
+                type: "pg",
+                maxPoints: 3,
+                wacanaKey: "w6",
+                prompt: "Larik yang paling tepat untuk melengkapi bagian sampiran yang rumpang pada Teks B agar selaras dengan kaidah rima akhir (a-b-a-b) dan pola suku kata pantun adalah ....",
+                options: [
+                    "A. Membawa bekal buah delima",
+                    "B. Singgah sebentar membeli intan",
+                    "C. Ombak bergulung tiada henti",
+                    "D. Nelayan mendayung perahu kayu"
+                ],
+                correct: 1,
+                keyLabel: "B",
+                pembahasan: "Larik keempat berbunyi 'Kelak dewasa petik kejayaan' (berakhiran -an). Maka larik kedua pada sampiran wajib berima akhir -an, yaitu 'Singgah sebentar membeli intan' (B) dengan pola 10 suku kata yang padu."
+            },
+            {
+                no: 20,
+                domain: "Puisi Modern & Pantun Nasihat",
+                indikator: "Menyimpulkan keterkaitan amanat keteguhan karakter pada puisi dan pantun.",
+                solo: "Relasional (L2)",
+                bentuk: "PG",
+                type: "pg",
+                maxPoints: 4,
+                wacanaKey: "w6",
+                prompt: "Nilai budi pekerti dan sikap hidup yang dipesankan secara konsisten pada Teks A maupun Teks B adalah ....",
+                options: [
+                    "A. keharusan memiliki kepedulian nurani, menjauhi kealpaan semu, dan membekali diri dengan ilmu kebajikan untuk masa depan",
+                    "B. kewajiban mencari keuntungan materi sebanyak-banyaknya selagi tubuh masih memiliki kekuatan fisik",
+                    "C. anjuran untuk hidup menyendiri di hutan agar terhindar dari polusi udara kota",
+                    "D. kepasrahan menerima nasib kerusakan alam tanpa perlu melakukan upaya perbaikan apa pun"
+                ],
+                correct: 0,
+                keyLabel: "A",
+                pembahasan: "Kedua puisi berpesan agar manusia memiliki kepekaan nurani membaca tanda-tanda zaman, tidak terbuai fatamorgana sesaat, dan giat menuntut ilmu kebajikan demi masa depan."
+            },
+            {
+                no: 21,
+                domain: "Teks Surat Resmi / Kedinasan MGMP",
+                indikator: "Menyunting kalimat tidak efektif dan kesalahan tanda baca sesuai EYD Edisi V.",
+                solo: "Relasional (L2)",
+                bentuk: "PG",
+                type: "pg",
+                maxPoints: 3,
+                wacanaKey: "w7",
+                prompt: "Cermatilah penulisan bagian alamat tujuan surat berikut: 'Yth. Kepala SMP/MTs Negeri dan Swasta Se-Kabupaten Sleman'. Alasan penulisan alamat tujuan surat tersebut sudah tepat menurut kaidah bahasa baku (EYD V) adalah ....",
+                options: [
+                    "A. tidak menggunakan kata sapaan berlebihan seperti 'Kepada Yth.' dan tidak diakhiri tanda titik pada baris akhir",
+                    "B. menggunakan singkatan gelar kehormatan akademis secara lengkap di depan nama lembaga sekolah",
+                    "C. mencantumkan nomor kontak telepon pengirim pada baris alamat surat dinas",
+                    "D. dicetak dengan huruf tebal miring untuk menarik perhatian kurir pos pengantar surat"
+                ],
+                correct: 0,
+                keyLabel: "A",
+                pembahasan: "Kaidah EYD Edisi V dan tata naskah surat dinas melarang penggunaan pleonasme 'Kepada Yth.' (cukup 'Yth.') serta tidak mencantumkan tanda titik di akhir baris alamat tujuan surat."
+            },
+            {
+                no: 22,
+                domain: "Teks Surat Resmi / Kedinasan MGMP",
+                indikator: "Menganalisis fungsi administratif komponen nomor surat dan lampiran kedinasan.",
+                solo: "Unistruktural (L1)",
+                bentuk: "PG",
+                type: "pg",
+                maxPoints: 3,
+                wacanaKey: "w7",
+                prompt: "Unsur 'Nomor: 088/MGMP-BI/XI/2026' pada struktur surat dinas di atas mengemban fungsi administratif yang sangat vital, yaitu ....",
+                options: [
+                    "A. menentukan besaran biaya anggaran yang harus dikeluarkan oleh instansi penerima surat",
+                    "B. memudahkan pengarsipan dokumen resmi, pelacakan kronologis surat keluar-masuk, serta pembuktian keabsahan hukum organisasi pengirim",
+                    "C. menggantikan fungsi cap stempel kedinasan dan tanda tangan pimpinan instansi",
+                    "D. memberikan kode rahasia yang hanya boleh dibuka oleh kepala bagian persuratan dinas"
+                ],
+                correct: 1,
+                keyLabel: "B",
+                pembahasan: "Nomor surat kedinasan berfungsi administratif untuk memudahkan pencatatan pada buku agenda, pengarsipan dokumen resmi, pelacakan kronologis surat, dan pembuktian keabsahan organisasi pengirim."
+            },
+            {
+                no: 23,
+                domain: "Soal Uraian SOLO (Amblesan Tanah & Intrusi)",
+                indikator: "Menguraikan minimal 3 dampak struktural penurunan tanah dan salinisasi sumur warga.",
+                solo: "Multistruktural (L1)",
+                bentuk: "Uraian",
+                type: "essay",
+                maxPoints: 4,
+                wacanaKey: "w1",
+                prompt: "Berdasarkan wacana 'Krisis Amblesan Tanah dan Intrusi Salin di Pesisir Jawa', uraikan secara sistematis minimal TIGA dampak nyata kerusakan lingkungan dan kerugian fisik yang dialami oleh masyarakat permukiman pesisir!",
+                keywords: ["rob", "fondasi", "infrastruktur", "payau", "klorida", "korosi", "pipa", "kesuburan", "pertanian", "sanitasi"],
+                keyLabel: "Rubrik SOLO Multistruktural (Maks 4 Poin): Menguraikan minimal 3 dampak nyata",
+                pembahasan: "Pedoman Penskoran SOLO (Maks 4 Poin): Menguraikan minimal 3 dampak nyata berbasis teks: (1) Kerusakan fondasi bangunan dan infrastruktur perkotaan akibat pergeseran/amblesan tanah, (2) Percepatan banjir rob permanen ke permukiman, (3) Perubahan rasa air sumur warga menjadi payau dan terganggunya sanitasi, (4) Korosi pada jaringan pipa besi serta penurunan kesuburan lahan pertanian pekarangan akibat tingginya ion klorida."
+            },
+            {
+                no: 24,
+                domain: "Soal Uraian SOLO (Diskusi Medsos & Drama)",
+                indikator: "Menganalisis korelasi ketergantungan digital instan terhadap erosi integritas moral.",
+                solo: "Relasional (L2)",
+                bentuk: "Uraian",
+                type: "essay",
+                maxPoints: 4,
+                wacanaKey: "w5",
+                prompt: "Berdasarkan keterkaitan antara teks 'Medsos' dan teks drama 'Batas Kejujuran', analisislah bagaimana kemudahan jalan pintas teknologi digital dapat memicu penurunan integritas moral peserta didik jika tidak dibarengi dengan literasi kritis! Jelaskan pula solusi pedagogis yang dapat diambil guru pembina untuk membentengi karakter siswa!",
+                keywords: ["instan", "plagiasi", "integritas", "kejujuran", "fokus", "literasi", "kritis", "etika", "sumber", "atribusi", "proses"],
+                keyLabel: "Rubrik SOLO Relasional (Maks 4 Poin): Kausalitas Jalan Pintas Digital & Solusi Pedagogis",
+                pembahasan: "Pedoman Penskoran SOLO (Maks 4 Poin): (1) Menghubungkan secara logis relasi kausalitas: kebiasaan dopamin/jalan pintas instan medsos & AI -> menurunnya daya tahan fokus mendalam -> godaan melakukan plagiasi tanpa atribusi demi pujian/trofi instan (2 poin). (2) Menjelaskan solusi pedagogis guru: menanamkan nilai integritas di atas trofi semu, menghargai proses nalar bertahap siswa, dan melatih etika sitasi serta literasi algoritma kritis (2 poin)."
+            },
+            {
+                no: 25,
+                domain: "Soal Uraian SOLO (Sintesis Program Aksi)",
+                indikator: "Merancang proposal program aksi terpadu literasi ekologis dan etika digital sekolah.",
+                solo: "Ext. Abstract (L3)",
+                bentuk: "Uraian",
+                type: "essay",
+                maxPoints: 4,
+                wacanaKey: "w3",
+                prompt: "Setelah menelaah persoalan degradasi ekologi lahan basah (Wacana Mangrove) serta pesan nurani kepedulian bumi dalam puisi Taufiq Ismail, rancanglah sebuah kerangka konsep proposal bertajuk 'Gerakan Pelajar Peduli Biosfer dan Restorasi Pesisir' di sekolah Anda! Kerangka wajib memuat: (a) Latar belakang masalah konseptual, (b) Dua program aksi nyata terstruktur, serta (c) Indikator keberhasilan program yang dapat diverifikasi secara objektif!",
+                keywords: ["latar belakang", "ekologi", "mangrove", "program", "aksi", "penanaman", "kampanye", "indikator", "keberhasilan", "persen", "bibit", "restorasi"],
+                keyLabel: "Rubrik SOLO Extended Abstract (Maks 4 Poin): Latar Belakang, 2 Program Aksi, & Indikator Terukur",
+                pembahasan: "Pedoman Penskoran SOLO (Maks 4 Poin): Merancang kerangka proposal komprehensif: (a) Landasan Konseptual: mengaitkan degradasi ekosistem pesisir/sungai dengan panggilan moral penyelamatan bumi (1 poin); (b) Dua Program Aksi Nyata: konkret dan aplikatif, misalnya 'Adopsi & Penanaman Bibit Mangrove Pelajar di Estuari' serta 'Kampanye Audit Sampah & Literasi Sains Lingkungan Sekolah' (2 poin); (c) Indikator Keberhasilan: memiliki tolok ukur kuantitatif/kualitatif yang dapat diverifikasi secara objektif (1 poin)."
+            }
+        ];
+
+        /* ============================================================================
+           2. STATE APLIKASI & PENYIMPANAN SKOR (IN-MEMORY + CLOUD FIRESTORE)
+           ============================================================================ */
+        let soundEnabled = true;
+        let audioCtx = null;
+
+        // State Identitas & Sesi Siswa Saat Ini
+        let currentStudent = {
+            id: 'student-' + Math.random().toString(36).substring(2, 9),
+            name: '',
+            kelas: '9A',
+            mode: 'solo', // 'solo' | 'class'
+            currentQuestionIdx: 0, // 0..25
+            answers: {}, // { 1: val, 2: val, ... 25: val }
+            perQuestionScore: {}, // { 1: pts, ... }
+            rawScore: 0,
+            finalNilai: 0,
+            finished: false
+        };
+
+        // Daftar Skor Siswa di Spreadsheet Guru (Default + Sinkron Firestore)
+        let teacherSpreadsheetRecords = [
+            {
+                id: 'seed-1',
+                name: 'Aisyah Putri Rahmawati',
+                kelas: '9A',
+                mode: 'Satu Kelas',
+                rawScore: 80,
+                finalNilai: 93.0,
+                timestamp: '08:15 WIB'
+            },
+            {
+                id: 'seed-2',
+                name: 'Bagas Pratama Wijaya',
+                kelas: '9B',
+                mode: 'Bermain Sendiri',
+                rawScore: 75,
+                finalNilai: 87.2,
+                timestamp: '08:22 WIB'
+            },
+            {
+                id: 'seed-3',
+                name: 'Nabila Zahra Khairunnisa',
+                kelas: '9C',
+                mode: 'Satu Kelas',
+                rawScore: 83,
+                finalNilai: 96.5,
+                timestamp: '08:30 WIB'
+            }
+        ];
+
+        let isTeacherUnlocked = false;
+        const TEACHER_PIN = "romi06";
+
+        // State Review Pembahasan Satu per Satu
+        let currentReviewIndex = 0; // 0..24
+
+        /* ============================================================================
+           3. EFEK SUara SINTETIS (WEB AUDIO API - TANPA URL EKSTERNAL)
+           ============================================================================ */
+        function playTone(type) {
+            if (!soundEnabled) return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'jump') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(280, now);
+                    osc.frequency.exponentialRampToValueAtTime(580, now + 0.14);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+                    osc.start(now);
+                    osc.stop(now + 0.15);
+                } else if (type === 'checkpoint') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now);
+                    osc.frequency.setValueAtTime(659.25, now + 0.08);
+                    osc.frequency.setValueAtTime(783.99, now + 0.16);
+                    gain.gain.setValueAtTime(0.18, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.32);
+                    osc.start(now);
+                    osc.stop(now + 0.32);
+                } else if (type === 'hit') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(160, now);
+                    osc.frequency.linearRampToValueAtTime(90, now + 0.18);
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                    osc.start(now);
+                    osc.stop(now + 0.2);
+                } else if (type === 'finish') {
+                    const notes = [523.25, 659.25, 783.99, 1046.5];
+                    notes.forEach((freq, idx) => {
+                        const o = audioCtx.createOscillator();
+                        const g = audioCtx.createGain();
+                        o.connect(g);
+                        g.connect(audioCtx.destination);
+                        o.type = 'triangle';
+                        o.frequency.setValueAtTime(freq, now + idx * 0.1);
+                        g.gain.setValueAtTime(0.2, now + idx * 0.1);
+                        g.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.1 + 0.25);
+                        o.start(now + idx * 0.1);
+                        o.stop(now + idx * 0.1 + 0.25);
+                    });
+                }
+            } catch (e) {
+                // Abaikan jika browser memblokir autoplay audio
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('soundIcon');
+            icon.className = soundEnabled ? 'fa-solid fa-volume-high text-emerald-600' : 'fa-solid fa-volume-xmark text-slate-400';
+            showToast(soundEnabled ? "Efek suara diaktifkan" : "Efek suara dinonaktifkan");
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toastNotification');
+            document.getElementById('toastMessage').textContent = msg;
+            toast.classList.remove('hidden');
+            clearTimeout(window._toastTimer);
+            window._toastTimer = setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3200);
+        }
+
+        /* ============================================================================
+           4. KONTROL UI BERANDA (KELAS, MODE, KISI-KISI, SPREADSHEET GURU)
+           ============================================================================ */
+        function selectClass(kelas) {
+            document.getElementById('selectedClassInput').value = kelas;
+            currentStudent.kelas = kelas;
+            document.querySelectorAll('.kelas-btn').forEach(btn => {
+                if (btn.getAttribute('data-kelas') === kelas) {
+                    btn.className = "kelas-btn py-1.5 sm:py-2 rounded-xl border-2 border-emerald-600 bg-emerald-600 text-white font-extrabold text-xs transition shadow-sm";
+                } else {
+                    btn.className = "kelas-btn py-1.5 sm:py-2 rounded-xl border-2 border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 font-extrabold text-xs transition";
+                }
+            });
+        }
+
+        function selectGameMode(mode) {
+            currentStudent.mode = mode;
+            const cardSolo = document.getElementById('modeCardSolo');
+            const cardClass = document.getElementById('modeCardClass');
+            const checkSolo = document.getElementById('checkSolo');
+            const checkClass = document.getElementById('checkClass');
+            const botOpt = document.getElementById('classMateBotOption');
+
+            if (mode === 'solo') {
+                cardSolo.className = "cursor-pointer rounded-xl border-2 border-emerald-600 bg-emerald-50/70 p-2 sm:p-2.5 flex items-start gap-2 transition";
+                cardClass.className = "cursor-pointer rounded-xl border-2 border-slate-200 bg-white hover:bg-slate-50 p-2 sm:p-2.5 flex items-start gap-2 transition";
+                checkSolo.className = "fa-solid fa-circle-check text-emerald-600 text-xs shrink-0";
+                checkClass.className = "fa-regular fa-circle text-slate-400 text-xs shrink-0";
+                botOpt.classList.add('hidden');
+            } else {
+                cardClass.className = "cursor-pointer rounded-xl border-2 border-sky-600 bg-sky-50/70 p-2 sm:p-2.5 flex items-start gap-2 transition";
+                cardSolo.className = "cursor-pointer rounded-xl border-2 border-slate-200 bg-white hover:bg-slate-50 p-2 sm:p-2.5 flex items-start gap-2 transition";
+                checkClass.className = "fa-solid fa-circle-check text-sky-600 text-xs shrink-0";
+                checkSolo.className = "fa-regular fa-circle text-slate-400 text-xs shrink-0";
+                botOpt.classList.remove('hidden');
+            }
+        }
+
+        function openKisiKisiModal() {
+            const tbody = document.getElementById('kisiKisiTableBody');
+            tbody.innerHTML = QUESTIONS_DATA.map(q => `
+                <tr>
+                    <td class="text-center font-bold text-slate-700">${q.no}</td>
+                    <td class="font-semibold text-slate-800">${q.domain}</td>
+                    <td class="text-slate-600">${q.indikator}</td>
+                    <td><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-900 font-bold text-[11px]">${q.solo}</span></td>
+                    <td class="text-center font-bold text-emerald-700">${q.bentuk}</td>
+                </tr>
+            `).join('');
+            document.getElementById('modalKisiKisi').classList.remove('hidden');
+        }
+
+        function closeKisiKisiModal() {
+            document.getElementById('modalKisiKisi').classList.add('hidden');
+        }
+
+        // Kontrol Buka/Kunci Spreadsheet Khusus Guru
+        function unlockTeacherSpreadsheet() {
+            const pinInput = document.getElementById('inputTeacherPin').value.trim();
+            const errEl = document.getElementById('teacherPinError');
+            if (pinInput === TEACHER_PIN) {
+                isTeacherUnlocked = true;
+                errEl.classList.add('hidden');
+                const container = document.getElementById('teacherSpreadsheetContainer');
+                if (container) container.classList.remove('md:max-w-md');
+                document.getElementById('spreadsheetLockedView').classList.add('hidden');
+                document.getElementById('spreadsheetUnlockedView').classList.remove('hidden');
+                document.getElementById('btnLockTeacherSheet').classList.remove('hidden');
+                document.getElementById('teacherLockBadge').innerHTML = '<i class="fa-solid fa-lock-open mr-0.5"></i>TERBUKA';
+                document.getElementById('teacherLockBadge').className = 'px-1.5 py-0.2 rounded text-[9px] sm:text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 shrink-0';
+                renderSpreadsheetTable();
+                showToast("Spreadsheet Guru berhasil dibuka!");
+            } else {
+                errEl.classList.remove('hidden');
+            }
+        }
+
+        function lockTeacherSpreadsheet() {
+            isTeacherUnlocked = false;
+            document.getElementById('inputTeacherPin').value = '';
+            const container = document.getElementById('teacherSpreadsheetContainer');
+            if (container) container.classList.add('md:max-w-md');
+            document.getElementById('spreadsheetUnlockedView').classList.add('hidden');
+            document.getElementById('spreadsheetLockedView').classList.remove('hidden');
+            document.getElementById('btnLockTeacherSheet').classList.add('hidden');
+            document.getElementById('teacherLockBadge').innerHTML = '<i class="fa-solid fa-lock mr-0.5"></i>TERKUNCI';
+            document.getElementById('teacherLockBadge').className = 'px-1.5 py-0.2 rounded text-[9px] sm:text-[10px] font-extrabold bg-rose-500/20 text-rose-300 border border-rose-400/30 shrink-0';
+            showToast("Spreadsheet telah dikunci kembali.");
+        }
+
+        function renderSpreadsheetTable() {
+            document.getElementById('lockedRecordCounter').textContent = `${teacherSpreadsheetRecords.length} Data`;
+
+            const filterKelas = document.getElementById('filterSheetClass') ? document.getElementById('filterSheetClass').value : 'ALL';
+            const filtered = filterKelas === 'ALL'
+                ? teacherSpreadsheetRecords
+                : teacherSpreadsheetRecords.filter(r => r.kelas === filterKelas);
+
+            // Statistik
+            document.getElementById('statTotalStudents').textContent = filtered.length;
+            if (filtered.length > 0) {
+                const avg = filtered.reduce((acc, r) => acc + Number(r.finalNilai), 0) / filtered.length;
+                const max = Math.max(...filtered.map(r => Number(r.finalNilai)));
+                document.getElementById('statAvgScore').textContent = avg.toFixed(1);
+                document.getElementById('statMaxScore').textContent = max.toFixed(1);
+            } else {
+                document.getElementById('statAvgScore').textContent = "0.0";
+                document.getElementById('statMaxScore').textContent = "0.0";
+            }
+
+            const tbody = document.getElementById('spreadsheetTableBody');
+            if (!tbody) return;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="text-center py-8 text-slate-400 font-semibold">
+                            Belum ada data nilai siswa untuk filter kelas ini.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map((rec, idx) => `
+                <tr>
+                    <td class="text-center font-bold text-slate-500">${idx + 1}</td>
+                    <td>
+                        <div class="font-bold text-slate-900">${escapeHtml(rec.name)}</div>
+                        <div class="text-[10px] text-slate-400">${rec.mode || 'Latihan TKA'}</div>
+                    </td>
+                    <td class="text-center">
+                        <span class="px-2 py-0.5 rounded bg-slate-200 text-slate-800 font-extrabold text-xs">${rec.kelas}</span>
+                    </td>
+                    <td class="text-center font-bold text-slate-700">${rec.rawScore} / 86</td>
+                    <td class="text-center">
+                        <span class="px-2 py-0.5 rounded-lg font-black text-xs ${Number(rec.finalNilai) >= 80 ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                            ${Number(rec.finalNilai).toFixed(1)}
+                        </span>
+                    </td>
+                    <td class="text-center text-slate-500 text-[11px]">${rec.timestamp}</td>
+                </tr>
+            `).join('');
+        }
+
+        function copySpreadsheetToClipboard() {
+            const header = "No\tNama Siswa\tKelas\tMode\tSkor Mentah (/86)\tNilai Akhir (100)\tWaktu\n";
+            const rows = teacherSpreadsheetRecords.map((r, i) =>
+                `${i + 1}\t${r.name}\t${r.kelas}\t${r.mode}\t${r.rawScore}\t${Number(r.finalNilai).toFixed(1)}\t${r.timestamp}`
+            ).join('\n');
+
+            const tempArea = document.createElement('textarea');
+            tempArea.value = header + rows;
+            document.body.appendChild(tempArea);
+            tempArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempArea);
+            showToast("Tabel skor berhasil disalin! Siap ditempel (Paste) ke Excel/Spreadsheet.");
+        }
+
+        function exportSpreadsheetCSV() {
+            let csv = "No,Nama Siswa,Kelas,Mode,Skor Mentah (Maks 86),Nilai Akhir TKA (Skala 100),Waktu\n";
+            teacherSpreadsheetRecords.forEach((r, i) => {
+                const safeName = `"${String(r.name).replace(/"/g, '""')}"`;
+                csv += `${i + 1},${safeName},${r.kelas},${r.mode},${r.rawScore},${Number(r.finalNilai).toFixed(1)},${r.timestamp}\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Rekap_Nilai_TKA_SMP_Muh_2_Depok_${new Date().toISOString().slice(0,10)}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            showToast("File CSV Spreadsheet berhasil diunduh!");
+        }
+
+        function saveStudentScoreRecord(record) {
+            // Update atau tambahkan berdasarkan ID
+            const existingIdx = teacherSpreadsheetRecords.findIndex(r => r.id === record.id);
+            if (existingIdx >= 0) {
+                teacherSpreadsheetRecords[existingIdx] = record;
+            } else {
+                teacherSpreadsheetRecords.unshift(record);
+            }
+            renderSpreadsheetTable();
+            // Jika terhubung ke Firestore, simpan juga ke koleksi publik
+            if (typeof window.syncScoreToFirestore === 'function') {
+                window.syncScoreToFirestore(record);
+            }
+        }
+
+        /* ============================================================================
+           5. MESIN GAME LOMBA LARI (CANVAS MULTI-RUNNER, RINTANGAN, & POS 25 SOAL)
+           ============================================================================ */
+        let canvas, ctx;
+        let gameAnimId = null;
+        let gameRunning = false;
+        let gamePausedForQuestion = false;
+        let sprintMultiplier = 1;
+
+        // Setiap kelipatan 100 meter skor lari memunculkan soal berikutnya (100m = Soal 1, 200m = Soal 2, ..., 2500m = Soal 25)
+        const SCORE_STEP_PER_QUESTION = 100;
+
+        // Objek Pelari Utama (Siswa)
+        let playerRunner = {
+            x: 130,
+            y: 0,
+            vy: 0,
+            groundY: 0,
+            width: 44,
+            height: 58,
+            jumping: false,
+            runScore: 0,
+            nextMilestone: SCORE_STEP_PER_QUESTION,
+            stumbleTimer: 0,
+            animFrame: 0
+        };
+
+        // Daftar Pelari Lain di Lintasan (Teman Sekelas Online + Simulasi Kelas)
+        let otherRunners = [];
+        let obstacles = [];
+        let clouds = [];
+        let trackOffset = 0;
+
+        const CLASS_COLORS = {
+            '9A': { primary: '#059669', light: '#d1fae5', text: '#065f46' },
+            '9B': { primary: '#2563eb', light: '#dbeafe', text: '#1e40af' },
+            '9C': { primary: '#d97706', light: '#fef3c7', text: '#92400e' },
+            '9D': { primary: '#e11d48', light: '#ffe4e6', text: '#9f1239' }
+        };
+
+        function startRaceGame() {
+            const nameVal = document.getElementById('inputStudentName').value.trim();
+            if (!nameVal) {
+                showToast("Mohon tuliskan Nama Siswa terlebih dahulu!");
+                document.getElementById('inputStudentName').focus();
+                return;
+            }
+
+            currentStudent.name = nameVal;
+            currentStudent.kelas = document.getElementById('selectedClassInput').value;
+            currentStudent.currentQuestionIdx = 0;
+            currentStudent.answers = {};
+            currentStudent.perQuestionScore = {};
+            currentStudent.rawScore = 0;
+            currentStudent.finalNilai = 0;
+            currentStudent.finished = false;
+
+            // Tampilkan View Game
+            document.getElementById('viewBeranda').classList.add('hidden');
+            document.getElementById('viewPembahasan').classList.add('hidden');
+            document.getElementById('viewGameRunner').classList.remove('hidden');
+            document.getElementById('btnNavHome').classList.remove('hidden');
+
+            // Update HUD
+            document.getElementById('hudPlayerName').textContent = `${currentStudent.name} (${currentStudent.kelas})`;
+            document.getElementById('hudClassAvatar').textContent = currentStudent.kelas;
+            document.getElementById('hudGameModeBadge').textContent = currentStudent.mode === 'class' ? 'Mode Satu Kelas' : 'Bermain Sendiri';
+            document.getElementById('hudCurrentQuestionIndex').textContent = '0';
+            document.getElementById('hudProgressBar').style.width = '0%';
+
+            initRunnerGameWorld();
+            playTone('checkpoint');
+        }
+
+        function initRunnerGameWorld() {
+            canvas = document.getElementById('runnerCanvas');
+            ctx = canvas.getContext('2d');
+            resizeRunnerCanvas();
+
+            playerRunner.runScore = 0;
+            playerRunner.nextMilestone = SCORE_STEP_PER_QUESTION;
+            playerRunner.vy = 0;
+            playerRunner.jumping = false;
+            playerRunner.stumbleTimer = 0;
+            gamePausedForQuestion = false;
+            gameRunning = true;
+
+            // Siapkan awan & rintangan awal
+            clouds = [
+                { x: 120, y: 45, s: 0.9 },
+                { x: 420, y: 70, s: 1.2 },
+                { x: 760, y: 38, s: 0.8 }
+            ];
+            obstacles = [
+                { x: 520, type: 'hurdle', width: 32, height: 42, passed: false },
+                { x: 860, type: 'cone', width: 30, height: 38, passed: false }
+            ];
+
+            // Siapkan pelari teman sekelas jika mode 'class' dipilih
+            otherRunners = [];
+            if (currentStudent.mode === 'class') {
+                const includeBots = document.getElementById('chkIncludeSimClassmates').checked;
+                if (includeBots) {
+                    const botProfiles = [
+                        { name: 'Raka Aditya', kelas: currentStudent.kelas, speedFactor: 0.96, laneOffset: -36 },
+                        { name: 'Intan Permata', kelas: currentStudent.kelas, speedFactor: 1.02, laneOffset: -18 },
+                        { name: 'Zaki Muharram', kelas: '9B', speedFactor: 0.92, laneOffset: 16 },
+                        { name: 'Salma Aulia', kelas: '9D', speedFactor: 0.99, laneOffset: 32 }
+                    ];
+                    otherRunners = botProfiles.map((b, i) => ({
+                        id: 'bot-' + i,
+                        name: b.name,
+                        kelas: b.kelas,
+                        runScore: 0,
+                        questionIdx: 0,
+                        speedFactor: b.speedFactor,
+                        laneOffset: b.laneOffset,
+                        jumping: false,
+                        jumpY: 0,
+                        finished: false
+                    }));
+                }
+            }
+
+            if (gameAnimId) cancelAnimationFrame(gameAnimId);
+            gameLoop();
+        }
+
+        function resizeRunnerCanvas() {
+            if (!canvas) return;
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width || 900;
+            canvas.height = rect.height || 320;
+            const bottomMargin = canvas.height < 250 ? 45 : 75;
+            playerRunner.groundY = canvas.height - bottomMargin;
+            if (!playerRunner.jumping) {
+                playerRunner.y = playerRunner.groundY;
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            if (!document.getElementById('viewGameRunner').classList.contains('hidden')) {
+                resizeRunnerCanvas();
+            }
+        });
+
+        function triggerPlayerJump() {
+            if (!gameRunning || gamePausedForQuestion) return;
+            if (!playerRunner.jumping) {
+                playerRunner.jumping = true;
+                playerRunner.vy = -13.5;
+                playTone('jump');
+            }
+        }
+
+        function triggerPlayerBoost() {
+            if (!gameRunning || gamePausedForQuestion) return;
+            playerRunner.runScore += 18;
+            showCanvasBanner("Sprint Aktif! +18m menuju Pos Soal berikutnya");
+            playTone('jump');
+        }
+
+        function toggleSprintSpeed() {
+            sprintMultiplier = sprintMultiplier === 1 ? 2 : 1;
+            document.getElementById('sprintLabel').textContent = `${sprintMultiplier}x`;
+            showToast(`Kecepatan lari diatur ke ${sprintMultiplier}x`);
+        }
+
+        // Keyboard listener untuk Lompat (Spasi / Panah Atas)
+        window.addEventListener('keydown', (e) => {
+            if (!gameRunning || gamePausedForQuestion) return;
+            if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') {
+                e.preventDefault();
+                triggerPlayerJump();
+            } else if (e.code === 'ArrowRight' || e.code === 'KeyD') {
+                triggerPlayerBoost();
+            }
+        });
+
+        function showCanvasBanner(msg) {
+            const banner = document.getElementById('canvasBannerOverlay');
+            document.getElementById('canvasBannerText').textContent = msg;
+            banner.classList.remove('hidden');
+            clearTimeout(window._bannerTimer);
+            window._bannerTimer = setTimeout(() => {
+                banner.classList.add('hidden');
+            }, 1800);
+        }
+
+        function gameLoop() {
+            if (!gameRunning) return;
+
+            updateRunnerPhysics();
+            drawRunnerWorld();
+
+            gameAnimId = requestAnimationFrame(gameLoop);
+        }
+
+        function updateRunnerPhysics() {
+            if (gamePausedForQuestion) return;
+
+            const baseSpeed = (playerRunner.stumbleTimer > 0 ? 2.2 : 5.2) * sprintMultiplier;
+            if (playerRunner.stumbleTimer > 0) playerRunner.stumbleTimer--;
+
+            trackOffset = (trackOffset + baseSpeed) % 80;
+            playerRunner.animFrame += 0.22 * sprintMultiplier;
+
+            // Tambah skor lari secara bertahap
+            playerRunner.runScore += 0.34 * sprintMultiplier;
+
+            // Fisika Lompat Pelari Utama
+            if (playerRunner.jumping) {
+                playerRunner.y += playerRunner.vy;
+                playerRunner.vy += 0.68; // Gravitasi
+                if (playerRunner.y >= playerRunner.groundY) {
+                    playerRunner.y = playerRunner.groundY;
+                    playerRunner.jumping = false;
+                    playerRunner.vy = 0;
+                }
+            }
+
+            // Update Awan
+            clouds.forEach(c => {
+                c.x -= 0.6 * c.s;
+                if (c.x < -120) c.x = canvas.width + 100;
+            });
+
+            // Update Rintangan (Hurdles & Cones)
+            obstacles.forEach(obs => {
+                obs.x -= baseSpeed;
+
+                // Cek tabrakan dengan pelari siswa
+                const playerRight = playerRunner.x + 18;
+                const playerLeft = playerRunner.x - 18;
+                const playerBottom = playerRunner.y;
+
+                if (!obs.passed && obs.x < playerRight && obs.x + obs.width > playerLeft) {
+                    if (playerBottom > playerRunner.groundY - obs.height + 10) {
+                        // Menabrak rintangan: sedikit tersandung tapi tetap lanjut!
+                        obs.passed = true;
+                        playerRunner.stumbleTimer = 22;
+                        playTone('hit');
+                        document.getElementById('hudObstacleStatus').textContent = "Awas rintangan! Tekan LOMPAT agar larimu lebih cepat!";
+                    }
+                }
+
+                // Jika berhasil melompati rintangan tanpa menabrak
+                if (!obs.passed && obs.x + obs.width < playerLeft) {
+                    obs.passed = true;
+                    playerRunner.runScore += 8; // Bonus melompati rintangan
+                    document.getElementById('hudObstacleStatus').textContent = "Bagus! Rintangan terlewati (+8m Bonus Skor Lari)";
+                }
+            });
+
+            // Hapus rintangan lama & buat rintangan baru
+            if (obstacles.length && obstacles[0].x < -80) {
+                obstacles.shift();
+            }
+            const lastObsX = obstacles.length ? obstacles[obstacles.length - 1].x : 300;
+            if (lastObsX < canvas.width + 150) {
+                const gap = 280 + Math.random() * 190;
+                const types = ['hurdle', 'cone', 'barrier'];
+                const t = types[Math.floor(Math.random() * types.length)];
+                obstacles.push({
+                    x: Math.max(canvas.width + 80, lastObsX + gap),
+                    type: t,
+                    width: t === 'barrier' ? 38 : 30,
+                    height: t === 'hurdle' ? 44 : 36,
+                    passed: false
+                });
+            }
+
+            // Update Pelari Teman Sekelas (Bot / Live)
+            otherRunners.forEach(r => {
+                if (!r.finished) {
+                    r.runScore += 0.31 * r.speedFactor * sprintMultiplier;
+                    r.questionIdx = Math.min(25, Math.floor(r.runScore / SCORE_STEP_PER_QUESTION));
+                    if (r.runScore >= 25 * SCORE_STEP_PER_QUESTION) {
+                        r.runScore = 25 * SCORE_STEP_PER_QUESTION;
+                        r.finished = true;
+                    }
+                    // Efek lompat otomatis saat dekat rintangan
+                    r.jumpY = Math.sin(playerRunner.animFrame + r.laneOffset) > 0.85 ? -18 : 0;
+                }
+            });
+
+            // Update HUD Angka
+            const displayScore = Math.floor(playerRunner.runScore);
+            document.getElementById('hudRunScore').textContent = displayScore;
+            document.getElementById('hudNextTargetScore').textContent = playerRunner.nextMilestone;
+
+            const progressPct = Math.min(100, (playerRunner.runScore / (25 * SCORE_STEP_PER_QUESTION)) * 100);
+            document.getElementById('hudProgressBar').style.width = `${progressPct}%`;
+
+            updateLiveLeaderboardUI();
+
+            // CEK APAKAH SUDAH MENCAPAI SKOR MILESTONE UNTUK MEMUNCULKAN SOAL BERIKUTNYA
+            if (playerRunner.runScore >= playerRunner.nextMilestone && currentStudent.currentQuestionIdx < 25) {
+                playerRunner.runScore = playerRunner.nextMilestone;
+                triggerQuestionModal(currentStudent.currentQuestionIdx);
+            }
+        }
+
+        function updateLiveLeaderboardUI() {
+            const allRunners = [
+                {
+                    name: currentStudent.name + " (Kamu)",
+                    kelas: currentStudent.kelas,
+                    qIdx: currentStudent.currentQuestionIdx,
+                    score: Math.floor(playerRunner.runScore),
+                    isMe: true
+                },
+                ...otherRunners.map(r => ({
+                    name: r.name,
+                    kelas: r.kelas,
+                    qIdx: r.questionIdx,
+                    score: Math.floor(r.runScore),
+                    isMe: false
+                }))
+            ];
+
+            // Tambahkan juga pemain live dari Firestore jika ada
+            if (window.firestoreLiveRunners && currentStudent.mode === 'class') {
+                window.firestoreLiveRunners.forEach(fr => {
+                    if (fr.id !== currentStudent.id) {
+                        allRunners.push({
+                            name: fr.name,
+                            kelas: fr.kelas,
+                            qIdx: fr.questionIdx || 0,
+                            score: fr.runScore || 0,
+                            isMe: false
+                        });
+                    }
+                });
+            }
+
+            allRunners.sort((a, b) => b.score - a.score);
+            document.getElementById('liveRunnerCountBadge').textContent = allRunners.length;
+
+            const listEl = document.getElementById('liveLeaderboardList');
+            listEl.innerHTML = allRunners.map((r, i) => `
+                <div class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md border ${r.isMe ? 'bg-emerald-100 border-emerald-300 font-extrabold text-emerald-950' : 'bg-white border-slate-200 text-slate-700'}">
+                    <span class="text-[9px] font-bold text-slate-400">${i + 1}.</span>
+                    <span class="truncate max-w-[90px]">${escapeHtml(r.name)}</span>
+                    <span class="text-[9px] px-1 rounded bg-slate-100 font-bold">${r.kelas}</span>
+                    <span class="text-[9px] font-bold text-emerald-700">(${r.qIdx}/25)</span>
+                </div>
+            `).join('');
+        }
+
+        function drawRunnerWorld() {
+            if (!ctx || !canvas) return;
+            const W = canvas.width;
+            const H = canvas.height;
+            const groundY = playerRunner.groundY;
+
+            // 1. Langit Cerah Stadion
+            const skyGrad = ctx.createLinearGradient(0, 0, 0, groundY - 40);
+            skyGrad.addColorStop(0, '#bae6fd');
+            skyGrad.addColorStop(1, '#f0fdf4');
+            ctx.fillStyle = skyGrad;
+            ctx.fillRect(0, 0, W, groundY);
+
+            // 2. Gambar Awan
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.88)';
+            clouds.forEach(c => {
+                ctx.beginPath();
+                ctx.arc(c.x, c.y, 20 * c.s, 0, Math.PI * 2);
+                ctx.arc(c.x + 18 * c.s, c.y - 6 * c.s, 24 * c.s, 0, Math.PI * 2);
+                ctx.arc(c.x + 38 * c.s, c.y, 18 * c.s, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // 3. Spanduk Tribun Stadion SMP Muh. 2 Depok
+            ctx.fillStyle = '#065f46';
+            ctx.fillRect(0, groundY - 78, W, 26);
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 12px "Plus Jakarta Sans", sans-serif';
+            for (let bx = -trackOffset * 2; bx < W + 400; bx += 420) {
+                ctx.fillText('★ ARENA LOMBA TKA SMP MUH. 2 DEPOK 2026/2027 — BAHASA INDONESIA ★', bx + 20, groundY - 61);
+            }
+
+            // 4. Rumput Hijau & Lintasan Lari Atletik (Merah Bata / Tartan)
+            ctx.fillStyle = '#22c55e';
+            ctx.fillRect(0, groundY - 52, W, 18);
+
+            ctx.fillStyle = '#e11d48';
+            ctx.fillRect(0, groundY - 34, W, H - (groundY - 34));
+
+            // Garis Lajur Putih Lintasan
+            ctx.strokeStyle = 'rgba(255,255,255,0.65)';
+            ctx.lineWidth = 2;
+            for (let lane = 0; lane < 4; lane++) {
+                const ly = groundY - 28 + lane * 26;
+                ctx.beginPath();
+                ctx.moveTo(0, ly);
+                ctx.lineTo(W, ly);
+                ctx.stroke();
+            }
+
+            // Marka Jarak Lintasan
+            ctx.fillStyle = 'rgba(255,255,255,0.5)';
+            for (let mx = -trackOffset; mx < W; mx += 80) {
+                ctx.fillRect(mx, groundY + 4, 28, 4);
+            }
+
+            // 5. Gambar Gerbang Pos Soal Berikutnya jika sudah dekat
+            const distToNext = (playerRunner.nextMilestone - playerRunner.runScore) * 9;
+            const gateX = playerRunner.x + distToNext;
+            if (gateX > 0 && gateX < W + 100 && currentStudent.currentQuestionIdx < 25) {
+                // Tiang Pos Soal
+                ctx.fillStyle = '#f59e0b';
+                ctx.fillRect(gateX - 6, groundY - 115, 12, 115);
+                // Papan Pos Soal
+                ctx.fillStyle = '#0f172a';
+                ctx.fillRect(gateX - 52, groundY - 142, 104, 30);
+                ctx.strokeStyle = '#fbbf24';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(gateX - 52, groundY - 142, 104, 30);
+                ctx.fillStyle = '#fef08a';
+                ctx.font = 'extrabold 11px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(`POS SOAL ${currentStudent.currentQuestionIdx + 1}`, gateX, groundY - 123);
+                ctx.textAlign = 'left';
+            }
+
+            // 6. Gambar Rintangan (Hurdles / Cones / Barriers)
+            obstacles.forEach(obs => {
+                const oy = groundY - obs.height;
+                if (obs.type === 'hurdle') {
+                    // Gawang Lari Atletik
+                    ctx.fillStyle = '#f8fafc';
+                    ctx.fillRect(obs.x + 4, oy, 6, obs.height);
+                    ctx.fillRect(obs.x + obs.width - 10, oy, 6, obs.height);
+                    ctx.fillStyle = '#f59e0b';
+                    ctx.fillRect(obs.x, oy, obs.width, 12);
+                    ctx.fillStyle = '#1e293b';
+                    ctx.fillRect(obs.x + 8, oy, 8, 12);
+                } else if (obs.type === 'cone') {
+                    // Kerucut Rintangan Oranye
+                    ctx.fillStyle = '#ea580c';
+                    ctx.beginPath();
+                    ctx.moveTo(obs.x + obs.width / 2, oy);
+                    ctx.lineTo(obs.x + obs.width, groundY);
+                    ctx.lineTo(obs.x, groundY);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(obs.x + 6, oy + 14, obs.width - 12, 6);
+                } else {
+                    // Kotak Rintangan Kuning-Hitam
+                    ctx.fillStyle = '#eab308';
+                    ctx.fillRect(obs.x, oy, obs.width, obs.height);
+                    ctx.strokeStyle = '#0f172a';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(obs.x, oy, obs.width, obs.height);
+                }
+            });
+
+            // 7. Gambar Pelari Teman Sekelas (dengan Label Nama Siswa!)
+            otherRunners.forEach(r => {
+                const diffScore = r.runScore - playerRunner.runScore;
+                const rx = Math.max(45, Math.min(W - 90, playerRunner.x + diffScore * 4.5));
+                const ry = groundY + r.laneOffset + r.jumpY;
+                drawSingleRunnerCharacter(rx, ry, r.name, r.kelas, false, playerRunner.animFrame + r.laneOffset);
+            });
+
+            // 8. Gambar Pelari Utama (Siswa yang Sedang Bermain) + Label Nama Siswa
+            drawSingleRunnerCharacter(
+                playerRunner.x,
+                playerRunner.y,
+                currentStudent.name,
+                currentStudent.kelas,
+                true,
+                playerRunner.animFrame
+            );
+        }
+
+        function drawSingleRunnerCharacter(x, y, name, kelas, isMainPlayer, animPhase) {
+            const palette = CLASS_COLORS[kelas] || CLASS_COLORS['9A'];
+            const legSwing = Math.sin(animPhase) * 10;
+
+            ctx.save();
+            if (!isMainPlayer) {
+                ctx.globalAlpha = 0.85;
+            }
+
+            // Bayangan di tanah
+            ctx.fillStyle = 'rgba(0,0,0,0.22)';
+            ctx.beginPath();
+            ctx.ellipse(x, y + 2, 18, 5, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Kaki Berlari
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 5;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.moveTo(x, y - 18);
+            ctx.lineTo(x + legSwing, y);
+            ctx.moveTo(x, y - 18);
+            ctx.lineTo(x - legSwing, y);
+            ctx.stroke();
+
+            // Badan Seragam Olahraga Kelas
+            ctx.fillStyle = palette.primary;
+            ctx.beginPath();
+            ctx.roundRect(x - 12, y - 42, 24, 26, 6);
+            ctx.fill();
+
+            // Nomor Dada Kelas
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 9px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(kelas, x, y - 26);
+
+            // Kepala
+            ctx.fillStyle = '#fde68a';
+            ctx.beginPath();
+            ctx.arc(x, y - 52, 11, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Ikat Kepala Atletik
+            ctx.fillStyle = isMainPlayer ? '#fbbf24' : palette.primary;
+            ctx.fillRect(x - 11, y - 58, 22, 5);
+
+            // LABEL NAMA SISWA DI ATAS KEPALA PELARI
+            const labelText = `${name} (${kelas})`;
+            ctx.font = isMainPlayer ? 'extrabold 11px Inter, sans-serif' : 'bold 10px Inter, sans-serif';
+            const textWidth = ctx.measureText(labelText).width;
+            const boxW = textWidth + 16;
+            const boxH = 20;
+            const boxX = x - boxW / 2;
+            const boxY = y - 86;
+
+            ctx.fillStyle = isMainPlayer ? '#0f172a' : 'rgba(255, 255, 255, 0.92)';
+            ctx.beginPath();
+            ctx.roundRect(boxX, boxY, boxW, boxH, 6);
+            ctx.fill();
+
+            ctx.strokeStyle = isMainPlayer ? '#10b981' : palette.primary;
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            ctx.fillStyle = isMainPlayer ? '#ffffff' : '#0f172a';
+            ctx.fillText(labelText, x, boxY + 14);
+
+            ctx.restore();
+        }
+
+        /* ============================================================================
+           6. MODAL PENGERJAAN 25 SOAL TKA & PENILAIAN OTOMATIS (PG, PGK, URAIAN SOLO)
+           ============================================================================ */
+        function triggerQuestionModal(qIndex) {
+            gamePausedForQuestion = true;
+            playTone('checkpoint');
+
+            const q = QUESTIONS_DATA[qIndex];
+            if (!q) return;
+
+            document.getElementById('qModalBadgeNum').textContent = `POS SOAL ${q.no} / 25`;
+            document.getElementById('qModalDomainTitle').textContent = q.domain;
+            document.getElementById('qModalMetaSubtitle').textContent = `Taraf SOLO: ${q.solo} • Bentuk: ${q.bentuk} • Bobot Maks: ${q.maxPoints} Poin`;
+
+            // Render Wacana
+            document.getElementById('qModalPassageBody').innerHTML = WACANA_DATA[q.wacanaKey] || '';
+            document.getElementById('qModalPromptText').textContent = `${q.no}. ${q.prompt}`;
+            document.getElementById('qModalValidationWarning').classList.add('hidden');
+
+            const container = document.getElementById('qModalInteractiveArea');
+            container.innerHTML = '';
+
+            if (q.type === 'pg') {
+                container.innerHTML = q.options.map((opt, idx) => `
+                    <label class="flex items-start gap-3 p-3.5 rounded-2xl border-2 border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/40 cursor-pointer transition">
+                        <input type="radio" name="qOptionInput" value="${idx}" class="mt-1 w-4 h-4 text-emerald-600 focus:ring-emerald-500">
+                        <span class="text-xs sm:text-sm font-semibold text-slate-800 leading-relaxed">${escapeHtml(opt)}</span>
+                    </label>
+                `).join('');
+            } else if (q.type === 'pgk_table') {
+                container.innerHTML = `
+                    <div class="overflow-x-auto border border-slate-300 rounded-2xl">
+                        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-100 border-b border-slate-300 font-extrabold text-slate-700">
+                                    <th class="p-3">Pernyataan</th>
+                                    <th class="p-3 text-center w-28">${q.columns[0]}</th>
+                                    <th class="p-3 text-center w-28">${q.columns[1]}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${q.statements.map((stmt, sIdx) => `
+                                    <tr class="border-b border-slate-200">
+                                        <td class="p-3 font-medium text-slate-800">${escapeHtml(stmt)}</td>
+                                        <td class="p-3 text-center">
+                                            <input type="radio" name="pgkRow_${sIdx}" value="${q.columns[0]}" class="w-4 h-4 text-emerald-600">
+                                        </td>
+                                        <td class="p-3 text-center">
+                                            <input type="radio" name="pgkRow_${sIdx}" value="${q.columns[1]}" class="w-4 h-4 text-emerald-600">
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            } else if (q.type === 'pgk_multi') {
+                container.innerHTML = `
+                    <div class="text-xs font-bold text-amber-800 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2 mb-2">
+                        <i class="fa-solid fa-check-double mr-1"></i>Berikan tanda centang (✓) pada pilihan-pilihan yang tepat! (Jawaban benar lebih dari satu)
+                    </div>
+                    ${q.options.map((opt, idx) => `
+                        <label class="flex items-start gap-3 p-3.5 rounded-2xl border-2 border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/40 cursor-pointer transition">
+                            <input type="checkbox" name="pgkMultiInput" value="${idx}" class="mt-1 w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500">
+                            <span class="text-xs sm:text-sm font-semibold text-slate-800 leading-relaxed">${escapeHtml(opt)}</span>
+                        </label>
+                    `).join('')}
+                `;
+            } else if (q.type === 'essay') {
+                container.innerHTML = `
+                    <div class="text-xs font-bold text-sky-900 bg-sky-50 border border-sky-200 rounded-xl p-3">
+                        <i class="fa-solid fa-pen-nib mr-1"></i><strong>Soal Uraian Berjenjang (${q.solo}):</strong> Tuliskan jawaban terstruktur berbasis data tekstual untuk meraih skor maksimal (4 Poin).
+                    </div>
+                    <textarea id="essayAnswerInput" rows="5" placeholder="Ketik jawaban uraianmu secara lengkap di sini..."
+                        class="w-full p-3.5 rounded-2xl border-2 border-slate-300 focus:border-emerald-600 outline-none text-xs sm:text-sm font-medium text-slate-800"></textarea>
+                `;
+            }
+
+            document.getElementById('modalQuestionCheckpoint').classList.remove('hidden');
+        }
+
+        function submitCheckpointAnswer() {
+            const qIndex = currentStudent.currentQuestionIdx;
+            const q = QUESTIONS_DATA[qIndex];
+            const warnEl = document.getElementById('qModalValidationWarning');
+
+            let studentResp = null;
+            let earnedPoints = 0;
+
+            if (q.type === 'pg') {
+                const checked = document.querySelector('input[name="qOptionInput"]:checked');
+                if (!checked) {
+                    warnEl.classList.remove('hidden');
+                    return;
+                }
+                const val = Number(checked.value);
+                const letters = ['A', 'B', 'C', 'D'];
+                studentResp = `${letters[val]}. ${q.options[val].substring(3)}`;
+                if (val === q.correct) {
+                    earnedPoints = q.maxPoints;
+                }
+            } else if (q.type === 'pgk_table') {
+                const chosen = [];
+                for (let i = 0; i < q.statements.length; i++) {
+                    const rowChecked = document.querySelector(`input[name="pgkRow_${i}"]:checked`);
+                    if (!rowChecked) {
+                        warnEl.classList.remove('hidden');
+                        return;
+                    }
+                    chosen.push(rowChecked.value);
+                }
+                studentResp = chosen.join(' - ');
+                let matchCount = 0;
+                chosen.forEach((val, idx) => {
+                    if (val === q.correct[idx]) matchCount++;
+                });
+                if (matchCount === q.correct.length) earnedPoints = q.maxPoints;
+                else if (matchCount === 2) earnedPoints = 2;
+            } else if (q.type === 'pgk_multi') {
+                const checkedNodes = Array.from(document.querySelectorAll('input[name="pgkMultiInput"]:checked'));
+                if (checkedNodes.length === 0) {
+                    warnEl.classList.remove('hidden');
+                    return;
+                }
+                const vals = checkedNodes.map(n => Number(n.value)).sort();
+                const letters = ['A', 'B', 'C', 'D'];
+                studentResp = vals.map(v => letters[v]).join(', ');
+
+                const corrSorted = [...q.correct].sort();
+                const isExact = vals.length === corrSorted.length && vals.every((v, i) => v === corrSorted[i]);
+                if (isExact) {
+                    earnedPoints = q.maxPoints;
+                } else {
+                    const hits = vals.filter(v => corrSorted.includes(v)).length;
+                    const wrong = vals.filter(v => !corrSorted.includes(v)).length;
+                    if (hits > 0 && wrong === 0) earnedPoints = 2;
+                }
+            } else if (q.type === 'essay') {
+                const textVal = document.getElementById('essayAnswerInput').value.trim();
+                if (textVal.length < 5) {
+                    warnEl.textContent = "Mohon tuliskan uraian jawabanmu minimal 1 kalimat sebelum melanjutkan!";
+                    warnEl.classList.remove('hidden');
+                    return;
+                }
+                studentResp = textVal;
+                // Penilaian Analitik Rubrik SOLO berbasis pencocokan kata kunci konsep & kelengkapan argumen
+                const lower = textVal.toLowerCase();
+                let matchedKw = 0;
+                q.keywords.forEach(kw => {
+                    if (lower.includes(kw)) matchedKw++;
+                });
+                const wordCount = textVal.split(/\s+/).length;
+                if (matchedKw >= 3 && wordCount >= 18) earnedPoints = 4;
+                else if (matchedKw >= 2 || wordCount >= 14) earnedPoints = 3;
+                else if (matchedKw >= 1 || wordCount >= 8) earnedPoints = 2;
+                else earnedPoints = 1;
+            }
+
+            // Simpan jawaban siswa (baik benar maupun salah, siswa tetap lanjut berlari!)
+            currentStudent.answers[q.no] = studentResp;
+            currentStudent.perQuestionScore[q.no] = earnedPoints;
+            currentStudent.rawScore = Object.values(currentStudent.perQuestionScore).reduce((a, b) => a + b, 0);
+            currentStudent.finalNilai = Number(((currentStudent.rawScore / 86) * 100).toFixed(1));
+
+            currentStudent.currentQuestionIdx++;
+            document.getElementById('hudCurrentQuestionIndex').textContent = currentStudent.currentQuestionIdx;
+
+            // Tutup modal soal
+            document.getElementById('modalQuestionCheckpoint').classList.add('hidden');
+
+            // Sinkronkan progres ke Firestore jika aktif
+            if (typeof window.syncRunnerProgressToFirestore === 'function') {
+                window.syncRunnerProgressToFirestore(currentStudent);
+            }
+
+            // Cek apakah sudah menyelesaikan soal ke-25
+            if (currentStudent.currentQuestionIdx >= 25) {
+                completeAll25Questions();
+            } else {
+                // Lanjutkan lomba lari ke soal berikutnya!
+                playerRunner.nextMilestone = (currentStudent.currentQuestionIdx + 1) * SCORE_STEP_PER_QUESTION;
+                gamePausedForQuestion = false;
+                showCanvasBanner(`Soal ${q.no} Terjawab! Lanjutkan lari menuju Pos Soal ${q.no + 1}!`);
+                playTone('jump');
+            }
+        }
+
+        function completeAll25Questions() {
+            gameRunning = false;
+            currentStudent.finished = true;
+            playTone('finish');
+
+            // Rekam nilai akhir ke dalam Spreadsheet Guru secara otomatis!
+            const finalRecord = {
+                id: currentStudent.id,
+                name: currentStudent.name,
+                kelas: currentStudent.kelas,
+                mode: currentStudent.mode === 'class' ? 'Satu Kelas' : 'Bermain Sendiri',
+                rawScore: currentStudent.rawScore,
+                finalNilai: currentStudent.finalNilai,
+                timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB'
+            };
+            saveStudentScoreRecord(finalRecord);
+
+            // Buka kunci Kotak Pembahasan di Beranda
+            unlockHomePembahasanBox();
+
+            if (currentStudent.mode === 'class') {
+                // Tampilkan modal sinkronisasi garis finis kelas terlebih dahulu
+                showFinishSyncModal();
+            } else {
+                // Langsung tampilkan Pembahasan Satu per Satu Soal & Skor
+                openPembahasanView(0);
+            }
+        }
+
+        function showFinishSyncModal() {
+            const modal = document.getElementById('modalFinishSync');
+            const listEl = document.getElementById('finishClassmatesList');
+            modal.classList.remove('hidden');
+
+            // Pastikan semua teman sekelas menyelesaikan lomba dalam beberapa detik
+            otherRunners.forEach(r => {
+                r.runScore = 25 * SCORE_STEP_PER_QUESTION;
+                r.questionIdx = 25;
+                r.finished = true;
+            });
+
+            listEl.innerHTML = `
+                <div class="flex items-center justify-between p-2 rounded-xl bg-emerald-100 text-emerald-900 font-bold">
+                    <span><i class="fa-solid fa-circle-check text-emerald-600 mr-1.5"></i>${escapeHtml(currentStudent.name)} (${currentStudent.kelas})</span>
+                    <span>Selesai 25/25 • Nilai: ${currentStudent.finalNilai}</span>
+                </div>
+                ${otherRunners.map(r => `
+                    <div class="flex items-center justify-between p-2 rounded-xl bg-white border border-slate-200 text-slate-700 font-semibold">
+                        <span><i class="fa-solid fa-flag-checkered text-sky-600 mr-1.5"></i>${escapeHtml(r.name)} (${r.kelas})</span>
+                        <span class="text-emerald-700 font-bold">Selesai 25/25 Soal</span>
+                    </div>
+                `).join('')}
+            `;
+        }
+
+        function proceedToPembahasanAfterFinish() {
+            document.getElementById('modalFinishSync').classList.add('hidden');
+            openPembahasanView(0);
+        }
+
+        /* ============================================================================
+           7. KOTAK PEMBAHASAN & VIEW PEMBAHASAN SATU PER SATU SOAL (1 s.d. 25)
+           ============================================================================ */
+        function unlockHomePembahasanBox() {
+            const box = document.getElementById('homePembahasanBox');
+            box.className = "beranda-glass-card rounded-2xl border-2 border-emerald-500 bg-emerald-50/85 p-2.5 sm:p-3 shadow-md transition-all unlocked-glow";
+
+            const iconWrap = document.getElementById('pembahasanLockIconWrap');
+            iconWrap.className = "w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 text-base shadow-md";
+            document.getElementById('pembahasanLockIcon').className = "fa-solid fa-lock-open";
+
+            const badge = document.getElementById('pembahasanStatusBadge');
+            badge.className = "px-2 py-0.2 rounded-full text-[9px] sm:text-[10px] font-extrabold uppercase bg-emerald-600 text-white";
+            badge.textContent = "TERBUKA • 25 SOAL SELESAI";
+
+            document.getElementById('pembahasanDescText').innerHTML =
+                `Selamat <strong>${escapeHtml(currentStudent.name)}</strong>! Klik tombol di samping untuk menampilkan <strong>Skor Akhir</strong> dan <strong>Pembahasan Satu per Satu Soal</strong>.`;
+
+            const btn = document.getElementById('btnOpenPembahasanFromHome');
+            btn.disabled = false;
+            btn.className = "btn-game px-3 sm:px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[11px] sm:text-xs flex items-center justify-center gap-1.5 cursor-pointer transition shadow-md";
+        }
+
+        function handleClickKotakPembahasan() {
+            if (!currentStudent.finished) {
+                showToast("Kotak pembahasan masih terkunci! Selesaikan 25 soal pada lomba lari terlebih dahulu.");
+                return;
+            }
+            // Munculkan preview skor di kotak beranda sekaligus buka tampilan pembahasan 1 per 1
+            const preview = document.getElementById('homeStudentScorePreview');
+            preview.classList.remove('hidden');
+            document.getElementById('homePreviewIdentity').textContent = `${currentStudent.name} (Kelas ${currentStudent.kelas})`;
+            document.getElementById('homePreviewDetail').textContent = `Selesai 25/25 Soal • Skor Mentah: ${currentStudent.rawScore} / 86 Poin`;
+            document.getElementById('homePreviewFinalScore').textContent = currentStudent.finalNilai.toFixed(1);
+
+            openPembahasanView(0);
+        }
+
+        function openPembahasanView(index) {
+            currentReviewIndex = index || 0;
+
+            document.getElementById('viewBeranda').classList.add('hidden');
+            document.getElementById('viewGameRunner').classList.add('hidden');
+            document.getElementById('viewPembahasan').classList.remove('hidden');
+            document.getElementById('btnNavHome').classList.remove('hidden');
+
+            // Tampilkan Skor Akhir Siswa di Header Pembahasan
+            document.getElementById('pembahasanStudentTitle').textContent = `${currentStudent.name} — Kelas ${currentStudent.kelas}`;
+            document.getElementById('pembahasanRawScore').textContent = `${currentStudent.rawScore} / 86 Poin`;
+            document.getElementById('pembahasanFinalNilai').textContent = currentStudent.finalNilai.toFixed(1);
+
+            renderPembahasanQuestionCard();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderPembahasanQuestionCard() {
+            const q = QUESTIONS_DATA[currentReviewIndex];
+            if (!q) return;
+
+            // Render Grid Nomor 1..25
+            const gridEl = document.getElementById('pembahasanNumberGrid');
+            gridEl.innerHTML = QUESTIONS_DATA.map((item, idx) => {
+                const earned = currentStudent.perQuestionScore[item.no] || 0;
+                let colorClass = "bg-rose-100 text-rose-800 border-rose-300";
+                if (earned === item.maxPoints) {
+                    colorClass = "bg-emerald-100 text-emerald-900 border-emerald-400";
+                } else if (earned > 0) {
+                    colorClass = "bg-amber-100 text-amber-900 border-amber-400";
+                }
+                const activeRing = idx === currentReviewIndex ? "ring-2 ring-slate-900 scale-105" : "";
+                return `
+                    <button onclick="jumpToPembahasanQuestion(${idx})" 
+                        class="w-7 h-7 rounded-lg border font-extrabold text-[11px] flex items-center justify-center transition ${colorClass} ${activeRing}">
+                        ${item.no}
+                    </button>
+                `;
+            }).join('');
+
+            // Info Soal Saat Ini
+            document.getElementById('revQNumberBadge').textContent = `Soal No. ${q.no} / 25`;
+            document.getElementById('revQDomainBadge').textContent = q.domain;
+            document.getElementById('revQSoloBadge').textContent = `SOLO: ${q.solo} (${q.bentuk})`;
+
+            document.getElementById('revPassageContent').innerHTML = WACANA_DATA[q.wacanaKey] || '';
+            document.getElementById('revQuestionPrompt').textContent = `${q.no}. ${q.prompt}`;
+
+            // Tampilkan opsi jika PG / PGK
+            const optList = document.getElementById('revOptionsList');
+            if (q.options) {
+                optList.innerHTML = q.options.map((opt, idx) => {
+                    const isKey = (q.type === 'pg' && idx === q.correct) || (q.type === 'pgk_multi' && q.correct.includes(idx));
+                    return `
+                        <div class="p-2.5 rounded-xl border ${isKey ? 'bg-emerald-50 border-emerald-400 font-bold text-emerald-950' : 'bg-slate-50 border-slate-200 text-slate-700'}">
+                            ${escapeHtml(opt)} ${isKey ? '<span class="ml-2 text-emerald-600 font-extrabold">✓ (Kunci)</span>' : ''}
+                        </div>
+                    `;
+                }).join('');
+            } else if (q.statements) {
+                optList.innerHTML = q.statements.map((st, idx) => `
+                    <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 flex items-center justify-between gap-2">
+                        <span>${idx + 1}. ${escapeHtml(st)}</span>
+                        <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-extrabold shrink-0">${q.correct[idx]}</span>
+                    </div>
+                `).join('');
+            } else {
+                optList.innerHTML = '';
+            }
+
+            const studentAns = currentStudent.answers[q.no] || 'Tidak dijawab';
+            const earnedPts = currentStudent.perQuestionScore[q.no] || 0;
+
+            document.getElementById('revStudentAnswerText').textContent = studentAns;
+            document.getElementById('revStudentPointEarned').textContent = `Skor Diperoleh: ${earnedPts} / ${q.maxPoints} Poin`;
+
+            const ansCard = document.getElementById('revStudentAnsCard');
+            if (earnedPts === q.maxPoints) {
+                ansCard.className = "p-2.5 rounded-xl border-2 border-emerald-400 bg-emerald-50/60";
+            } else if (earnedPts > 0) {
+                ansCard.className = "p-2.5 rounded-xl border-2 border-amber-400 bg-amber-50/60";
+            } else {
+                ansCard.className = "p-2.5 rounded-xl border-2 border-rose-300 bg-rose-50/60";
+            }
+
+            document.getElementById('revOfficialKeyText').textContent = q.keyLabel;
+            document.getElementById('revMaxPointInfo').textContent = `Bobot Maksimal: ${q.maxPoints} Poin`;
+            document.getElementById('revExplanationText').textContent = q.pembahasan;
+
+            // Tombol Prev / Next
+            document.getElementById('btnRevPrev').disabled = currentReviewIndex === 0;
+            document.getElementById('btnRevPrev').classList.toggle('opacity-40', currentReviewIndex === 0);
+            document.getElementById('btnRevNext').disabled = currentReviewIndex === QUESTIONS_DATA.length - 1;
+            document.getElementById('btnRevNext').classList.toggle('opacity-40', currentReviewIndex === QUESTIONS_DATA.length - 1);
+        }
+
+        function stepPembahasanQuestion(delta) {
+            const nextIdx = currentReviewIndex + delta;
+            if (nextIdx >= 0 && nextIdx < QUESTIONS_DATA.length) {
+                currentReviewIndex = nextIdx;
+                renderPembahasanQuestionCard();
+            }
+        }
+
+        function jumpToPembahasanQuestion(idx) {
+            currentReviewIndex = idx;
+            renderPembahasanQuestionCard();
+        }
+
+        function returnToHome() {
+            gameRunning = false;
+            if (gameAnimId) cancelAnimationFrame(gameAnimId);
+
+            document.getElementById('viewGameRunner').classList.add('hidden');
+            document.getElementById('viewPembahasan').classList.add('hidden');
+            document.getElementById('viewBeranda').classList.remove('hidden');
+            document.getElementById('btnNavHome').classList.add('hidden');
+
+            // Jika siswa sudah menyelesaikan 25 soal, tampilkan juga preview skornya di kotak pembahasan beranda
+            if (currentStudent.finished) {
+                const preview = document.getElementById('homeStudentScorePreview');
+                preview.classList.remove('hidden');
+                document.getElementById('homePreviewIdentity').textContent = `${currentStudent.name} (Kelas ${currentStudent.kelas})`;
+                document.getElementById('homePreviewDetail').textContent = `Selesai 25/25 Soal • Skor Mentah: ${currentStudent.rawScore} / 86 Poin`;
+                document.getElementById('homePreviewFinalScore').textContent = currentStudent.finalNilai.toFixed(1);
+            }
+            renderSpreadsheetTable();
+        }
+
+        function escapeHtml(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        // Inisialisasi saat halaman dimuat
+        window.onload = function () {
+            renderSpreadsheetTable();
+        };
+    </script>
+
+    <!-- ================= SINKRONISASI CLOUD REAL-TIME (FIREBASE FIRESTORE) ================= -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        (async function initCloudSync() {
+            try {
+                if (typeof __firebase_config === 'undefined' || !__firebase_config) return;
+
+                const firebaseConfig = JSON.parse(__firebase_config);
+                const appId = typeof __app_id !== 'undefined' ? __app_id : 'smp-muh2-depok-tka-2026';
+
+                const app = initializeApp(firebaseConfig);
+                const auth = getAuth(app);
+                const db = getFirestore(app);
+
+                // RULE 3: Auth Before Queries
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                onAuthStateChanged(auth, (user) => {
+                    if (!user) return;
+
+                    // 1. Dengarkan Spreadsheet Nilai Guru secara Real-Time (RULE 1 & RULE 2)
+                    const scoresCol = collection(db, 'artifacts', appId, 'public', 'data', 'tka_student_scores');
+                    onSnapshot(scoresCol, (snapshot) => {
+                        const cloudScores = [];
+                        snapshot.forEach(docSnap => {
+                            cloudScores.push(docSnap.data());
+                        });
+                        if (cloudScores.length > 0) {
+                            // Gabungkan dengan daftar lokal
+                            cloudScores.forEach(cs => {
+                                const idx = teacherSpreadsheetRecords.findIndex(r => r.id === cs.id);
+                                if (idx >= 0) teacherSpreadsheetRecords[idx] = cs;
+                                else teacherSpreadsheetRecords.unshift(cs);
+                            });
+                            renderSpreadsheetTable();
+                        }
+                    }, (err) => {
+                        console.warn("Sinkronisasi skor:", err);
+                    });
+
+                    // 2. Dengarkan Pelari Kelas Aktif secara Real-Time
+                    const runnersCol = collection(db, 'artifacts', appId, 'public', 'data', 'tka_active_runners');
+                    onSnapshot(runnersCol, (snapshot) => {
+                        const activeList = [];
+                        snapshot.forEach(docSnap => {
+                            activeList.push(docSnap.data());
+                        });
+                        window.firestoreLiveRunners = activeList;
+                        const onlineText = document.getElementById('liveOnlineRunnersText');
+                        if (onlineText) {
+                            onlineText.textContent = `Pemain aktif di lintasan kelas saat ini: ${Math.max(1, activeList.length)} siswa`;
+                        }
+                    }, (err) => {
+                        console.warn("Sinkronisasi pelari:", err);
+                    });
+
+                    // Ekspos fungsi simpan skor & progres pelari
+                    window.syncScoreToFirestore = async (record) => {
+                        if (!auth.currentUser) return;
+                        const scoreDoc = doc(db, 'artifacts', appId, 'public', 'data', 'tka_student_scores', record.id);
+                        await setDoc(scoreDoc, record);
+                    };
+
+                    window.syncRunnerProgressToFirestore = async (studentState) => {
+                        if (!auth.currentUser) return;
+                        const runnerDoc = doc(db, 'artifacts', appId, 'public', 'data', 'tka_active_runners', studentState.id);
+                        await setDoc(runnerDoc, {
+                            id: studentState.id,
+                            name: studentState.name,
+                            kelas: studentState.kelas,
+                            questionIdx: studentState.currentQuestionIdx,
+                            runScore: studentState.currentQuestionIdx * 100,
+                            finished: studentState.finished,
+                            updatedAt: Date.now()
+                        });
+                    };
+                });
+            } catch (err) {
+                console.warn("Mode mandiri lokal aktif:", err);
+            }
+        })();
+    </script>
+</body>
+</html>
